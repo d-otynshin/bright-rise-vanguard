@@ -1,9 +1,9 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { ArrowRight, Brain, Target, Users, Wrench, Palette, Calculator } from "lucide-react";
 
 interface Question {
@@ -93,29 +93,63 @@ const careerSuggestions = {
   }
 };
 
+const QUESTIONS_PER_PAGE = 10;
+
 const Index = () => {
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answers, setAnswers] = useState<number[]>([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [answers, setAnswers] = useState<{ [key: number]: number }>({});
   const [showResults, setShowResults] = useState(false);
   const [testStarted, setTestStarted] = useState(false);
 
-  const handleAnswer = (rating: number) => {
-    const newAnswers = [...answers, rating];
-    setAnswers(newAnswers);
+  const totalPages = Math.ceil(questions.length / QUESTIONS_PER_PAGE);
+  const currentQuestions = questions.slice(
+    currentPage * QUESTIONS_PER_PAGE,
+    (currentPage + 1) * QUESTIONS_PER_PAGE
+  );
 
-    if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
+  const handleAnswer = (questionId: number, rating: number) => {
+    setAnswers(prev => ({
+      ...prev,
+      [questionId]: rating
+    }));
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages - 1) {
+      setCurrentPage(currentPage + 1);
     } else {
       setShowResults(true);
     }
   };
 
+  const handlePreviousPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const getAnsweredCount = () => {
+    return Object.keys(answers).length;
+  };
+
+  const canProceed = () => {
+    const startIndex = currentPage * QUESTIONS_PER_PAGE;
+    const endIndex = Math.min((currentPage + 1) * QUESTIONS_PER_PAGE, questions.length);
+    
+    for (let i = startIndex; i < endIndex; i++) {
+      if (!answers[questions[i].id]) {
+        return false;
+      }
+    }
+    return true;
+  };
+
   const calculateResults = (): Results => {
     const results: Results = { R: 0, A: 0, I: 0, S: 0, E: 0, C: 0 };
     
-    questions.forEach((question, index) => {
-      if (answers[index]) {
-        results[question.category] += answers[index];
+    questions.forEach((question) => {
+      if (answers[question.id]) {
+        results[question.category] += answers[question.id];
       }
     });
 
@@ -130,8 +164,8 @@ const Index = () => {
   };
 
   const resetTest = () => {
-    setCurrentQuestion(0);
-    setAnswers([]);
+    setCurrentPage(0);
+    setAnswers({});
     setShowResults(false);
     setTestStarted(false);
   };
@@ -273,49 +307,105 @@ const Index = () => {
     );
   }
 
-  const progress = ((currentQuestion + 1) / questions.length) * 100;
+  const progress = (getAnsweredCount() / questions.length) * 100;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       <div className="container mx-auto px-4 py-16">
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <div className="mb-8">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-bold text-gray-800">Question {currentQuestion + 1} of {questions.length}</h2>
-              <Badge variant="secondary">{Math.round(progress)}% Complete</Badge>
+              <h2 className="text-2xl font-bold text-gray-800">
+                Page {currentPage + 1} of {totalPages}
+              </h2>
+              <Badge variant="secondary">
+                {getAnsweredCount()} of {questions.length} answered ({Math.round(progress)}%)
+              </Badge>
             </div>
             <Progress value={progress} className="h-2" />
           </div>
 
-          <Card className="border-0 shadow-xl bg-white/90 backdrop-blur-sm">
+          <Card className="border-0 shadow-xl bg-white/90 backdrop-blur-sm mb-8">
             <CardHeader className="pb-6">
-              <CardTitle className="text-xl leading-relaxed">
-                {questions[currentQuestion].text}
+              <CardTitle className="text-xl">
+                Questions {currentPage * QUESTIONS_PER_PAGE + 1} - {Math.min((currentPage + 1) * QUESTIONS_PER_PAGE, questions.length)}
               </CardTitle>
               <CardDescription>
-                Rate how much you agree with this statement (1 = Strongly Disagree, 5 = Strongly Agree)
+                Rate how much you agree with each statement (1 = Strongly Disagree, 5 = Strongly Agree)
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-5 gap-3">
-                {[1, 2, 3, 4, 5].map((rating) => (
-                  <Button
-                    key={rating}
-                    onClick={() => handleAnswer(rating)}
-                    variant="outline"
-                    size="lg"
-                    className="h-16 text-lg font-semibold hover:bg-blue-50 hover:border-blue-300 transition-all duration-200"
-                  >
-                    {rating}
-                  </Button>
+              <div className="space-y-6">
+                {currentQuestions.map((question, index) => (
+                  <div key={question.id} className="border-b border-gray-100 pb-6 last:border-b-0">
+                    <div className="mb-4">
+                      <h3 className="text-lg font-medium leading-relaxed mb-2">
+                        {currentPage * QUESTIONS_PER_PAGE + index + 1}. {question.text}
+                      </h3>
+                    </div>
+                    <div className="grid grid-cols-5 gap-3">
+                      {[1, 2, 3, 4, 5].map((rating) => (
+                        <Button
+                          key={rating}
+                          onClick={() => handleAnswer(question.id, rating)}
+                          variant={answers[question.id] === rating ? "default" : "outline"}
+                          size="lg"
+                          className={`h-12 text-lg font-semibold transition-all duration-200 ${
+                            answers[question.id] === rating 
+                              ? "bg-blue-600 text-white" 
+                              : "hover:bg-blue-50 hover:border-blue-300"
+                          }`}
+                        >
+                          {rating}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
                 ))}
               </div>
-              <div className="flex justify-between text-sm text-gray-500 mt-3">
+              <div className="flex justify-between text-sm text-gray-500 mt-6 px-4">
                 <span>Strongly Disagree</span>
                 <span>Strongly Agree</span>
               </div>
             </CardContent>
           </Card>
+
+          <div className="flex items-center justify-between">
+            <Button
+              onClick={handlePreviousPage}
+              disabled={currentPage === 0}
+              variant="outline"
+              size="lg"
+            >
+              Previous
+            </Button>
+
+            <Pagination>
+              <PaginationContent>
+                {Array.from({ length: totalPages }, (_, i) => (
+                  <PaginationItem key={i}>
+                    <PaginationLink
+                      onClick={() => setCurrentPage(i)}
+                      isActive={currentPage === i}
+                      className="cursor-pointer"
+                    >
+                      {i + 1}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+              </PaginationContent>
+            </Pagination>
+
+            <Button
+              onClick={handleNextPage}
+              disabled={!canProceed()}
+              size="lg"
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+            >
+              {currentPage === totalPages - 1 ? "View Results" : "Next"}
+              <ArrowRight className="ml-2 w-4 h-4" />
+            </Button>
+          </div>
         </div>
       </div>
     </div>
