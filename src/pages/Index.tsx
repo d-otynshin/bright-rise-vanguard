@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
-import { ArrowRight, Brain, Target, Users, Wrench, Palette, Calculator, Briefcase } from "lucide-react";
+import { ArrowRight, Brain, Target, Users, Wrench, Palette, Calculator, Briefcase, Star, Award } from "lucide-react";
 
 interface Question {
   id: number;
@@ -93,37 +93,67 @@ const careerSuggestions = {
   }
 };
 
-const jobDatabase = {
-  R: [
-    "Mechanical Engineer", "Electrician", "Carpenter", "Plumber", "Automotive Technician",
-    "Aircraft Mechanic", "Construction Manager", "Welder", "HVAC Technician", "Industrial Designer",
-    "Agricultural Engineer", "Mining Engineer", "Machinist", "Electronics Technician", "Pilot"
-  ],
-  A: [
-    "Graphic Designer", "Interior Designer", "Photographer", "Music Producer", "Art Director",
-    "Creative Writer", "Fashion Designer", "Animator", "Film Director", "Dance Instructor",
-    "Museum Curator", "Theater Director", "Jewelry Designer", "Multimedia Artist", "Art Teacher"
-  ],
-  I: [
-    "Data Scientist", "Research Scientist", "Software Engineer", "Biomedical Engineer", "Physicist",
-    "Chemist", "Mathematician", "Medical Researcher", "Environmental Scientist", "Statistician",
-    "Biologist", "Geologist", "Astronomer", "Computer Systems Analyst", "Operations Research Analyst"
-  ],
-  S: [
-    "School Counselor", "Social Worker", "Registered Nurse", "Physical Therapist", "Clinical Psychologist",
-    "Special Education Teacher", "Community Health Worker", "Marriage Counselor", "Occupational Therapist",
-    "Child Care Worker", "Mental Health Counselor", "Speech Therapist", "Recreation Therapist", "Life Coach", "Chaplain"
-  ],
-  E: [
-    "Business Manager", "Sales Manager", "Marketing Director", "Real Estate Agent", "Financial Advisor",
-    "Entrepreneur", "Project Manager", "Operations Manager", "Business Consultant", "Investment Banker",
-    "Insurance Sales Agent", "Public Relations Manager", "Event Coordinator", "Restaurant Manager", "Retail Manager"
-  ],
-  C: [
-    "Accountant", "Financial Analyst", "Database Administrator", "Administrative Assistant", "Bookkeeper",
-    "Tax Preparer", "Auditor", "Legal Secretary", "Medical Records Technician", "Quality Control Inspector",
-    "Budget Analyst", "Credit Analyst", "Insurance Underwriter", "Payroll Clerk", "Court Reporter"
-  ]
+const jobsByPreparation = {
+  R: {
+    bestFit: [
+      "Mechanical Engineer", "Civil Engineer", "Electrical Engineer", "Aerospace Engineer", 
+      "Industrial Engineer", "Agricultural Engineer"
+    ],
+    greatFit: [
+      "Electrician", "Carpenter", "Plumber", "Automotive Technician", "Aircraft Mechanic", 
+      "Construction Manager", "Welder", "HVAC Technician", "Machinist", "Electronics Technician"
+    ]
+  },
+  A: {
+    bestFit: [
+      "Art Director", "Creative Director", "Interior Designer", "Graphic Designer", 
+      "Film Director", "Music Producer"
+    ],
+    greatFit: [
+      "Photographer", "Fashion Designer", "Animator", "Dance Instructor", "Museum Curator", 
+      "Theater Director", "Jewelry Designer", "Multimedia Artist", "Creative Writer"
+    ]
+  },
+  I: {
+    bestFit: [
+      "Data Scientist", "Research Scientist", "Biomedical Engineer", "Medical Researcher", 
+      "Software Engineer", "Environmental Scientist"
+    ],
+    greatFit: [
+      "Physicist", "Chemist", "Mathematician", "Biologist", "Geologist", "Astronomer", 
+      "Computer Systems Analyst", "Operations Research Analyst", "Statistician"
+    ]
+  },
+  S: {
+    bestFit: [
+      "Clinical Psychologist", "Physical Therapist", "Occupational Therapist", 
+      "Speech Therapist", "School Counselor", "Social Worker"
+    ],
+    greatFit: [
+      "Registered Nurse", "Special Education Teacher", "Community Health Worker", 
+      "Marriage Counselor", "Child Care Worker", "Mental Health Counselor", "Life Coach"
+    ]
+  },
+  E: {
+    bestFit: [
+      "Business Manager", "Marketing Director", "Financial Advisor", "Investment Banker", 
+      "Business Consultant", "Operations Manager"
+    ],
+    greatFit: [
+      "Sales Manager", "Real Estate Agent", "Project Manager", "Public Relations Manager", 
+      "Event Coordinator", "Restaurant Manager", "Insurance Sales Agent"
+    ]
+  },
+  C: {
+    bestFit: [
+      "Financial Analyst", "Database Administrator", "Budget Analyst", "Credit Analyst", 
+      "Auditor", "Tax Preparer"
+    ],
+    greatFit: [
+      "Accountant", "Administrative Assistant", "Bookkeeper", "Legal Secretary", 
+      "Medical Records Technician", "Quality Control Inspector", "Payroll Clerk"
+    ]
+  }
 };
 
 const QUESTIONS_PER_PAGE = 10;
@@ -196,18 +226,20 @@ const Index = () => {
       .map(([type]) => type as keyof Results);
   };
 
-  const getSuitableJobs = (results: Results) => {
+  const getCategorizedJobs = (results: Results) => {
     const topThree = getTopThreeTypes(results);
-    const allJobs = topThree.flatMap(type => jobDatabase[type]);
-    // Remove duplicates and return unique jobs
-    return [...new Set(allJobs)];
-  };
+    const bestFit: string[] = [];
+    const greatFit: string[] = [];
 
-  const resetTest = () => {
-    setCurrentPage(0);
-    setAnswers({});
-    setShowResults(false);
-    setTestStarted(false);
+    topThree.forEach(type => {
+      bestFit.push(...jobsByPreparation[type].bestFit);
+      greatFit.push(...jobsByPreparation[type].greatFit);
+    });
+
+    return {
+      bestFit: [...new Set(bestFit)],
+      greatFit: [...new Set(greatFit)]
+    };
   };
 
   if (!testStarted) {
@@ -272,7 +304,7 @@ const Index = () => {
     const results = calculateResults();
     const topThree = getTopThreeTypes(results);
     const maxScore = Math.max(...Object.values(results));
-    const suitableJobs = getSuitableJobs(results);
+    const categorizedJobs = getCategorizedJobs(results);
 
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
@@ -332,32 +364,70 @@ const Index = () => {
               })}
             </div>
 
-            {/* New Suitable Jobs Section */}
+            {/* Updated Suitable Jobs Section with Preparation Levels */}
             <Card className="border-0 shadow-xl bg-white/90 backdrop-blur-sm mb-8">
               <CardHeader className="pb-6">
                 <div className="flex items-center gap-3 mb-2">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 flex items-center justify-center">
                     <Briefcase className="w-5 h-5 text-white" />
                   </div>
-                  <CardTitle className="text-2xl">Suitable Jobs for You</CardTitle>
+                  <CardTitle className="text-2xl">Careers that fit your interests and preparation level</CardTitle>
                 </div>
                 <CardDescription className="text-lg">
-                  Based on your top interest areas, here are {suitableJobs.length} job recommendations
+                  Jobs organized by preparation level based on your top interest areas
                 </CardDescription>
               </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                  {suitableJobs.map((job, index) => (
-                    <div
-                      key={job}
-                      className="p-3 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border border-blue-100 hover:shadow-md transition-all duration-200 hover:scale-105"
-                    >
-                      <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"></div>
-                        <span className="font-medium text-gray-800">{job}</span>
-                      </div>
+              <CardContent className="space-y-8">
+                {/* Best Fit Section */}
+                <div>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center">
+                      <Star className="w-4 h-4 text-white" />
                     </div>
-                  ))}
+                    <h3 className="text-xl font-semibold text-blue-600">Best fit</h3>
+                    <Badge variant="secondary" className="bg-blue-50 text-blue-700">
+                      Higher preparation required
+                    </Badge>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {categorizedJobs.bestFit.map((job) => (
+                      <div
+                        key={job}
+                        className="p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg border border-blue-200 hover:shadow-md transition-all duration-200 hover:scale-105"
+                      >
+                        <div className="flex items-center gap-3">
+                          <Star className="w-4 h-4 text-blue-600" />
+                          <span className="font-medium text-gray-800">{job}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Great Fit Section */}
+                <div>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-r from-green-500 to-green-600 flex items-center justify-center">
+                      <Award className="w-4 h-4 text-white" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-green-600">Great fit</h3>
+                    <Badge variant="secondary" className="bg-green-50 text-green-700">
+                      Moderate preparation required
+                    </Badge>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {categorizedJobs.greatFit.map((job) => (
+                      <div
+                        key={job}
+                        className="p-4 bg-gradient-to-r from-green-50 to-green-100 rounded-lg border border-green-200 hover:shadow-md transition-all duration-200 hover:scale-105"
+                      >
+                        <div className="flex items-center gap-3">
+                          <Award className="w-4 h-4 text-green-600" />
+                          <span className="font-medium text-gray-800">{job}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </CardContent>
             </Card>
