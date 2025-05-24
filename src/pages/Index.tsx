@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
-import { ArrowRight, Brain, Target, Users, Wrench, Palette, Calculator } from "lucide-react";
+import { ArrowRight, Brain, Target, Users, Wrench, Palette, Calculator, Briefcase } from "lucide-react";
 
 interface Question {
   id: number;
@@ -93,6 +93,39 @@ const careerSuggestions = {
   }
 };
 
+const jobDatabase = {
+  R: [
+    "Mechanical Engineer", "Electrician", "Carpenter", "Plumber", "Automotive Technician",
+    "Aircraft Mechanic", "Construction Manager", "Welder", "HVAC Technician", "Industrial Designer",
+    "Agricultural Engineer", "Mining Engineer", "Machinist", "Electronics Technician", "Pilot"
+  ],
+  A: [
+    "Graphic Designer", "Interior Designer", "Photographer", "Music Producer", "Art Director",
+    "Creative Writer", "Fashion Designer", "Animator", "Film Director", "Dance Instructor",
+    "Museum Curator", "Theater Director", "Jewelry Designer", "Multimedia Artist", "Art Teacher"
+  ],
+  I: [
+    "Data Scientist", "Research Scientist", "Software Engineer", "Biomedical Engineer", "Physicist",
+    "Chemist", "Mathematician", "Medical Researcher", "Environmental Scientist", "Statistician",
+    "Biologist", "Geologist", "Astronomer", "Computer Systems Analyst", "Operations Research Analyst"
+  ],
+  S: [
+    "School Counselor", "Social Worker", "Registered Nurse", "Physical Therapist", "Clinical Psychologist",
+    "Special Education Teacher", "Community Health Worker", "Marriage Counselor", "Occupational Therapist",
+    "Child Care Worker", "Mental Health Counselor", "Speech Therapist", "Recreation Therapist", "Life Coach", "Chaplain"
+  ],
+  E: [
+    "Business Manager", "Sales Manager", "Marketing Director", "Real Estate Agent", "Financial Advisor",
+    "Entrepreneur", "Project Manager", "Operations Manager", "Business Consultant", "Investment Banker",
+    "Insurance Sales Agent", "Public Relations Manager", "Event Coordinator", "Restaurant Manager", "Retail Manager"
+  ],
+  C: [
+    "Accountant", "Financial Analyst", "Database Administrator", "Administrative Assistant", "Bookkeeper",
+    "Tax Preparer", "Auditor", "Legal Secretary", "Medical Records Technician", "Quality Control Inspector",
+    "Budget Analyst", "Credit Analyst", "Insurance Underwriter", "Payroll Clerk", "Court Reporter"
+  ]
+};
+
 const QUESTIONS_PER_PAGE = 10;
 
 const Index = () => {
@@ -161,6 +194,13 @@ const Index = () => {
       .sort(([,a], [,b]) => b - a)
       .slice(0, 3)
       .map(([type]) => type as keyof Results);
+  };
+
+  const getSuitableJobs = (results: Results) => {
+    const topThree = getTopThreeTypes(results);
+    const allJobs = topThree.flatMap(type => jobDatabase[type]);
+    // Remove duplicates and return unique jobs
+    return [...new Set(allJobs)];
   };
 
   const resetTest = () => {
@@ -232,6 +272,7 @@ const Index = () => {
     const results = calculateResults();
     const topThree = getTopThreeTypes(results);
     const maxScore = Math.max(...Object.values(results));
+    const suitableJobs = getSuitableJobs(results);
 
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
@@ -290,6 +331,36 @@ const Index = () => {
                 );
               })}
             </div>
+
+            {/* New Suitable Jobs Section */}
+            <Card className="border-0 shadow-xl bg-white/90 backdrop-blur-sm mb-8">
+              <CardHeader className="pb-6">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 flex items-center justify-center">
+                    <Briefcase className="w-5 h-5 text-white" />
+                  </div>
+                  <CardTitle className="text-2xl">Suitable Jobs for You</CardTitle>
+                </div>
+                <CardDescription className="text-lg">
+                  Based on your top interest areas, here are {suitableJobs.length} job recommendations
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                  {suitableJobs.map((job, index) => (
+                    <div
+                      key={job}
+                      className="p-3 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border border-blue-100 hover:shadow-md transition-all duration-200 hover:scale-105"
+                    >
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"></div>
+                        <span className="font-medium text-gray-800">{job}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
 
             <div className="text-center">
               <Button 
