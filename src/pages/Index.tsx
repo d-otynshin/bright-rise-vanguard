@@ -242,6 +242,13 @@ const Index = () => {
     };
   };
 
+  const resetTest = () => {
+    setCurrentPage(0);
+    setAnswers({});
+    setShowResults(false);
+    setTestStarted(false);
+  };
+
   if (!testStarted) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
