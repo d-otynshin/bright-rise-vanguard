@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -159,6 +160,7 @@ const jobsByPreparation = {
 const QUESTIONS_PER_PAGE = 10;
 
 const Index = () => {
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(0);
   const [answers, setAnswers] = useState<{ [key: number]: number }>({});
   const [showResults, setShowResults] = useState(false);
@@ -381,7 +383,7 @@ const Index = () => {
                   <CardTitle className="text-2xl">Careers that fit your interests and preparation level</CardTitle>
                 </div>
                 <CardDescription className="text-lg">
-                  Jobs organized by preparation level based on your top interest areas
+                  Jobs organized by preparation level based on your top interest areas. Click on any job to learn more.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-8">
@@ -400,7 +402,8 @@ const Index = () => {
                     {categorizedJobs.bestFit.map((job) => (
                       <div
                         key={job}
-                        className="p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg border border-blue-200 hover:shadow-md transition-all duration-200 hover:scale-105"
+                        onClick={() => handleJobClick(job)}
+                        className="p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg border border-blue-200 hover:shadow-md transition-all duration-200 hover:scale-105 cursor-pointer"
                       >
                         <div className="flex items-center gap-3">
                           <Star className="w-4 h-4 text-blue-600" />
@@ -426,7 +429,8 @@ const Index = () => {
                     {categorizedJobs.greatFit.map((job) => (
                       <div
                         key={job}
-                        className="p-4 bg-gradient-to-r from-green-50 to-green-100 rounded-lg border border-green-200 hover:shadow-md transition-all duration-200 hover:scale-105"
+                        onClick={() => handleJobClick(job)}
+                        className="p-4 bg-gradient-to-r from-green-50 to-green-100 rounded-lg border border-green-200 hover:shadow-md transition-all duration-200 hover:scale-105 cursor-pointer"
                       >
                         <div className="flex items-center gap-3">
                           <Award className="w-4 h-4 text-green-600" />
