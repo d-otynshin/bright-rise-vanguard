@@ -18,13 +18,6 @@ const LandingPage = ({ onStartTest }: LandingPageProps) => {
             <h1 className="text-5xl font-bold text-gray-900 mb-6">
               What do you want to do for a living?
             </h1>
-            <div className="relative w-full max-w-4xl mx-auto mb-8">
-              <img 
-                src="/lovable-uploads/06d559a0-ca0b-474b-b51f-60b383323f37.png" 
-                alt="Career professionals collage" 
-                className="w-full h-48 object-cover rounded-lg shadow-lg"
-              />
-            </div>
           </div>
 
           {/* Three Cards Section */}
