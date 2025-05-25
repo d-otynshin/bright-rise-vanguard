@@ -30,22 +30,22 @@ const questions: Question[] = [
   { id: 6, text: "I like organizing data and working with numbers", category: 'C' },
   { id: 7, text: "I prefer working outdoors or with my hands", category: 'R' },
   { id: 8, text: "I enjoy expressing myself through creative mediums", category: 'A' },
-  { id: 9, text: "I like conducting research and experiments", category: 'I' },
-  { id: 10, text: "I enjoy teaching and mentoring others", category: 'S' },
-  { id: 11, text: "I like managing projects and people", category: 'E' },
-  { id: 12, text: "I prefer following detailed procedures and rules", category: 'C' },
-  { id: 13, text: "I enjoy building and fixing things", category: 'R' },
-  { id: 14, text: "I like performing or entertaining others", category: 'A' },
-  { id: 15, text: "I enjoy analyzing data and finding patterns", category: 'I' },
-  { id: 16, text: "I like counseling and supporting people", category: 'S' },
-  { id: 17, text: "I enjoy selling ideas or products", category: 'E' },
-  { id: 18, text: "I like keeping accurate records and files", category: 'C' },
-  { id: 19, text: "I prefer practical, hands-on work", category: 'R' },
-  { id: 20, text: "I enjoy designing and creating new things", category: 'A' },
-  { id: 21, text: "I like theoretical and abstract thinking", category: 'I' },
-  { id: 22, text: "I enjoy working in healthcare or social services", category: 'S' },
-  { id: 23, text: "I like taking risks and making deals", category: 'E' },
-  { id: 24, text: "I prefer structured and organized environments", category: 'C' }
+  // { id: 9, text: "I like conducting research and experiments", category: 'I' },
+  // { id: 10, text: "I enjoy teaching and mentoring others", category: 'S' },
+  // { id: 11, text: "I like managing projects and people", category: 'E' },
+  // { id: 12, text: "I prefer following detailed procedures and rules", category: 'C' },
+  // { id: 13, text: "I enjoy building and fixing things", category: 'R' },
+  // { id: 14, text: "I like performing or entertaining others", category: 'A' },
+  // { id: 15, text: "I enjoy analyzing data and finding patterns", category: 'I' },
+  // { id: 16, text: "I like counseling and supporting people", category: 'S' },
+  // { id: 17, text: "I enjoy selling ideas or products", category: 'E' },
+  // { id: 18, text: "I like keeping accurate records and files", category: 'C' },
+  // { id: 19, text: "I prefer practical, hands-on work", category: 'R' },
+  // { id: 20, text: "I enjoy designing and creating new things", category: 'A' },
+  // { id: 21, text: "I like theoretical and abstract thinking", category: 'I' },
+  // { id: 22, text: "I enjoy working in healthcare or social services", category: 'S' },
+  // { id: 23, text: "I like taking risks and making deals", category: 'E' },
+  // { id: 24, text: "I prefer structured and organized environments", category: 'C' }
 ];
 
 const careerSuggestions = {
@@ -96,73 +96,135 @@ const careerSuggestions = {
 const jobsByPreparation = {
   R: {
     bestFit: [
-      "Mechanical Engineer", "Civil Engineer", "Electrical Engineer", "Aerospace Engineer", 
-      "Industrial Engineer", "Agricultural Engineer"
+      { name: "Mechanical Engineer", zone: 5 },
+      { name: "Civil Engineer", zone: 4 },
+      { name: "Electrical Engineer", zone: 4 },
+      { name: "Aerospace Engineer", zone: 5 },
+      { name: "Industrial Engineer", zone: 4 },
+      { name: "Agricultural Engineer", zone: 4 }
     ],
     greatFit: [
-      "Electrician", "Carpenter", "Plumber", "Automotive Technician", "Aircraft Mechanic", 
-      "Construction Manager", "Welder", "HVAC Technician", "Machinist", "Electronics Technician"
+      { name: "Electrician", zone: 3 },
+      { name: "Carpenter", zone: 2 },
+      { name: "Plumber", zone: 3 },
+      { name: "Automotive Technician", zone: 3 },
+      { name: "Aircraft Mechanic", zone: 3 },
+      { name: "Construction Manager", zone: 4 },
+      { name: "Welder", zone: 2 },
+      { name: "HVAC Technician", zone: 3 },
+      { name: "Machinist", zone: 2 },
+      { name: "Electronics Technician", zone: 3 }
     ]
   },
   A: {
     bestFit: [
-      "Art Director", "Creative Director", "Interior Designer", "Graphic Designer", 
-      "Film Director", "Music Producer"
+      { name: "Art Director", zone: 4 },
+      { name: "Creative Director", zone: 5 },
+      { name: "Interior Designer", zone: 4 },
+      { name: "Graphic Designer", zone: 3 },
+      { name: "Film Director", zone: 5 },
+      { name: "Music Producer", zone: 4 }
     ],
     greatFit: [
-      "Photographer", "Fashion Designer", "Animator", "Dance Instructor", "Museum Curator", 
-      "Theater Director", "Jewelry Designer", "Multimedia Artist", "Creative Writer"
+      { name: "Photographer", zone: 2 },
+      { name: "Fashion Designer", zone: 3 },
+      { name: "Animator", zone: 3 },
+      { name: "Dance Instructor", zone: 2 },
+      { name: "Museum Curator", zone: 4 },
+      { name: "Theater Director", zone: 4 },
+      { name: "Jewelry Designer", zone: 2 },
+      { name: "Multimedia Artist", zone: 3 },
+      { name: "Creative Writer", zone: 3 }
     ]
   },
   I: {
     bestFit: [
-      "Data Scientist", "Research Scientist", "Biomedical Engineer", "Medical Researcher", 
-      "Software Engineer", "Environmental Scientist"
+      { name: "Data Scientist", zone: 5 },
+      { name: "Research Scientist", zone: 5 },
+      { name: "Biomedical Engineer", zone: 5 },
+      { name: "Medical Researcher", zone: 5 },
+      { name: "Software Engineer", zone: 4 },
+      { name: "Environmental Scientist", zone: 4 }
     ],
     greatFit: [
-      "Physicist", "Chemist", "Mathematician", "Biologist", "Geologist", "Astronomer", 
-      "Computer Systems Analyst", "Operations Research Analyst", "Statistician"
+      { name: "Physicist", zone: 5 },
+      { name: "Chemist", zone: 4 },
+      { name: "Mathematician", zone: 5 },
+      { name: "Biologist", zone: 4 },
+      { name: "Geologist", zone: 4 },
+      { name: "Astronomer", zone: 5 },
+      { name: "Computer Systems Analyst", zone: 4 },
+      { name: "Operations Research Analyst", zone: 4 },
+      { name: "Statistician", zone: 4 }
     ]
   },
   S: {
     bestFit: [
-      "Clinical Psychologist", "Physical Therapist", "Occupational Therapist", 
-      "Speech Therapist", "School Counselor", "Social Worker"
+      { name: "Clinical Psychologist", zone: 5 },
+      { name: "Physical Therapist", zone: 5 },
+      { name: "Occupational Therapist", zone: 5 },
+      { name: "Speech Therapist", zone: 5 },
+      { name: "School Counselor", zone: 4 },
+      { name: "Social Worker", zone: 4 }
     ],
     greatFit: [
-      "Registered Nurse", "Special Education Teacher", "Community Health Worker", 
-      "Marriage Counselor", "Child Care Worker", "Mental Health Counselor", "Life Coach"
+      { name: "Registered Nurse", zone: 4 },
+      { name: "Special Education Teacher", zone: 4 },
+      { name: "Community Health Worker", zone: 3 },
+      { name: "Marriage Counselor", zone: 4 },
+      { name: "Child Care Worker", zone: 2 },
+      { name: "Mental Health Counselor", zone: 4 },
+      { name: "Life Coach", zone: 3 }
     ]
   },
   E: {
     bestFit: [
-      "Business Manager", "Marketing Director", "Financial Advisor", "Investment Banker", 
-      "Business Consultant", "Operations Manager"
+      { name: "Business Manager", zone: 4 },
+      { name: "Marketing Director", zone: 5 },
+      { name: "Financial Advisor", zone: 4 },
+      { name: "Investment Banker", zone: 5 },
+      { name: "Business Consultant", zone: 5 },
+      { name: "Operations Manager", zone: 4 }
     ],
     greatFit: [
-      "Sales Manager", "Real Estate Agent", "Project Manager", "Public Relations Manager", 
-      "Event Coordinator", "Restaurant Manager", "Insurance Sales Agent"
+      { name: "Sales Manager", zone: 4 },
+      { name: "Real Estate Agent", zone: 3 },
+      { name: "Project Manager", zone: 4 },
+      { name: "Public Relations Manager", zone: 4 },
+      { name: "Event Coordinator", zone: 3 },
+      { name: "Restaurant Manager", zone: 3 },
+      { name: "Insurance Sales Agent", zone: 3 }
     ]
   },
   C: {
     bestFit: [
-      "Financial Analyst", "Database Administrator", "Budget Analyst", "Credit Analyst", 
-      "Auditor", "Tax Preparer"
+      { name: "Financial Analyst", zone: 4 },
+      { name: "Database Administrator", zone: 4 },
+      { name: "Budget Analyst", zone: 4 },
+      { name: "Credit Analyst", zone: 4 },
+      { name: "Auditor", zone: 4 },
+      { name: "Tax Preparer", zone: 3 }
     ],
     greatFit: [
-      "Accountant", "Administrative Assistant", "Bookkeeper", "Legal Secretary", 
-      "Medical Records Technician", "Quality Control Inspector", "Payroll Clerk"
+      { name: "Accountant", zone: 3 },
+      { name: "Administrative Assistant", zone: 2 },
+      { name: "Bookkeeper", zone: 2 },
+      { name: "Legal Secretary", zone: 3 },
+      { name: "Medical Records Technician", zone: 2 },
+      { name: "Quality Control Inspector", zone: 2 },
+      { name: "Payroll Clerk", zone: 2 }
     ]
   }
 };
 
-const QUESTIONS_PER_PAGE = 10;
+const QUESTIONS_PER_PAGE = 5;
 
 const Index = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [answers, setAnswers] = useState<{ [key: number]: number }>({});
   const [showResults, setShowResults] = useState(false);
   const [testStarted, setTestStarted] = useState(false);
+  const [jobZone, setJobZone] = useState(5);
 
   const totalPages = Math.ceil(questions.length / QUESTIONS_PER_PAGE);
   const currentQuestions = questions.slice(
@@ -228,17 +290,17 @@ const Index = () => {
 
   const getCategorizedJobs = (results: Results) => {
     const topThree = getTopThreeTypes(results);
-    const bestFit: string[] = [];
-    const greatFit: string[] = [];
+    const bestFit: { name: string; zone: number }[] = [];
+    const greatFit: { name: string; zone: number }[] = [];
 
     topThree.forEach(type => {
-      bestFit.push(...jobsByPreparation[type].bestFit);
-      greatFit.push(...jobsByPreparation[type].greatFit);
+      bestFit.push(...jobsByPreparation[type as keyof Results].bestFit);
+      greatFit.push(...jobsByPreparation[type as keyof Results].greatFit);
     });
 
     return {
-      bestFit: [...new Set(bestFit)],
-      greatFit: [...new Set(greatFit)]
+      bestFit: [...new Set(bestFit.map(j => JSON.stringify(j)))].map(j => JSON.parse(j)),
+      greatFit: [...new Set(greatFit.map(j => JSON.stringify(j)))].map(j => JSON.parse(j))
     };
   };
 
@@ -371,7 +433,6 @@ const Index = () => {
               })}
             </div>
 
-            {/* Updated Suitable Jobs Section with Preparation Levels */}
             <Card className="border-0 shadow-xl bg-white/90 backdrop-blur-sm mb-8">
               <CardHeader className="pb-6">
                 <div className="flex items-center gap-3 mb-2">
@@ -383,9 +444,24 @@ const Index = () => {
                 <CardDescription className="text-lg">
                   Jobs organized by preparation level based on your top interest areas
                 </CardDescription>
+                <div className="flex items-center gap-2 mt-4 justify-center">
+                  {[1, 2, 3, 4, 5].map(zone => (
+                    <button
+                      key={zone}
+                      onClick={() => setJobZone(zone)}
+                      className={`px-4 py-2 rounded-full border-2 font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+                        jobZone === zone
+                          ? 'bg-blue-600 text-white border-blue-600 scale-110 shadow-lg'
+                          : 'bg-white text-blue-600 border-blue-300 hover:bg-blue-50'
+                      }`}
+                    >
+                      {zone}
+                    </button>
+                  ))}
+                  <span className="ml-4 text-gray-500 font-medium">Job Zone {jobZone}</span>
+                </div>
               </CardHeader>
               <CardContent className="space-y-8">
-                {/* Best Fit Section */}
                 <div>
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center">
@@ -397,21 +473,23 @@ const Index = () => {
                     </Badge>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {categorizedJobs.bestFit.map((job) => (
+                    {categorizedJobs.bestFit.filter(job => job.zone === jobZone).slice(0, 10).map((job) => (
                       <div
-                        key={job}
+                        key={job.name}
                         className="p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg border border-blue-200 hover:shadow-md transition-all duration-200 hover:scale-105"
                       >
                         <div className="flex items-center gap-3">
                           <Star className="w-4 h-4 text-blue-600" />
-                          <span className="font-medium text-gray-800">{job}</span>
+                          <span className="font-medium text-gray-800">{job.name}</span>
                         </div>
                       </div>
                     ))}
+                    {categorizedJobs.bestFit.filter(job => job.zone === jobZone).length === 0 && (
+                      <div className="text-gray-400 italic">No careers found for this job zone.</div>
+                    )}
                   </div>
                 </div>
 
-                {/* Great Fit Section */}
                 <div>
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-8 h-8 rounded-full bg-gradient-to-r from-green-500 to-green-600 flex items-center justify-center">
@@ -423,17 +501,20 @@ const Index = () => {
                     </Badge>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {categorizedJobs.greatFit.map((job) => (
+                    {categorizedJobs.greatFit.filter(job => job.zone === jobZone).slice(0, 10).map((job) => (
                       <div
-                        key={job}
+                        key={job.name}
                         className="p-4 bg-gradient-to-r from-green-50 to-green-100 rounded-lg border border-green-200 hover:shadow-md transition-all duration-200 hover:scale-105"
                       >
                         <div className="flex items-center gap-3">
                           <Award className="w-4 h-4 text-green-600" />
-                          <span className="font-medium text-gray-800">{job}</span>
+                          <span className="font-medium text-gray-800">{job.name}</span>
                         </div>
                       </div>
                     ))}
+                    {categorizedJobs.greatFit.filter(job => job.zone === jobZone).length === 0 && (
+                      <div className="text-gray-400 italic">No careers found for this job zone.</div>
+                    )}
                   </div>
                 </div>
               </CardContent>
@@ -483,35 +564,56 @@ const Index = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="space-y-6">
-                {currentQuestions.map((question, index) => (
-                  <div key={question.id} className="border-b border-gray-100 pb-6 last:border-b-0">
-                    <div className="mb-4">
-                      <h3 className="text-lg font-medium leading-relaxed mb-2">
-                        {currentPage * QUESTIONS_PER_PAGE + index + 1}. {question.text}
-                      </h3>
-                    </div>
-                    <div className="grid grid-cols-5 gap-3">
+              {/* Larger Table-like Question Layout */}
+              <div className="overflow-x-auto">
+                <table className="w-full border-separate border-spacing-y-2">
+                  <thead>
+                    <tr>
+                      <th className="text-left text-sm font-semibold text-gray-600 px-4 py-2">#</th>
+                      <th className="text-left text-sm font-semibold text-gray-600 px-4 py-2">Question</th>
                       {[1, 2, 3, 4, 5].map((rating) => (
-                        <Button
-                          key={rating}
-                          onClick={() => handleAnswer(question.id, rating)}
-                          variant={answers[question.id] === rating ? "default" : "outline"}
-                          size="lg"
-                          className={`h-12 text-lg font-semibold transition-all duration-200 ${
-                            answers[question.id] === rating 
-                              ? "bg-blue-600 text-white" 
-                              : "hover:bg-blue-50 hover:border-blue-300"
-                          }`}
-                        >
-                          {rating}
-                        </Button>
+                        <th key={rating} className="text-center text-sm font-semibold text-gray-600 px-4 py-2">{rating}</th>
                       ))}
-                    </div>
-                  </div>
-                ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {currentQuestions.map((question, index) => {
+                      const categoryColors = {
+                        R: 'bg-green-50',
+                        A: 'bg-purple-50',
+                        I: 'bg-pink-50',
+                        S: 'bg-indigo-50',
+                        E: 'bg-orange-50',
+                        C: 'bg-yellow-50',
+                      };
+                      return (
+                        <tr key={question.id} className={`rounded-lg ${categoryColors[question.category]} transition-all`}>
+                          <td className="text-sm text-gray-400 px-4 py-2 font-mono">{currentPage * QUESTIONS_PER_PAGE + index + 1}</td>
+                          <td className="text-base text-gray-800 px-4 py-2 max-w-lg whitespace-normal">{question.text}</td>
+                          {[1, 2, 3, 4, 5].map((rating) => (
+                            <td key={rating} className="text-center px-4 py-2">
+                              <button
+                                onClick={() => handleAnswer(question.id, rating)}
+                                className={`w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-blue-400
+                                  ${answers[question.id] === rating
+                                    ? 'bg-blue-600 border-blue-600 text-white scale-110 shadow-md'
+                                    : 'bg-white border-gray-300 hover:bg-blue-50'}
+                                `}
+                                aria-label={`Rate ${rating}`}
+                              >
+                                {answers[question.id] === rating && (
+                                  <span className="block w-4 h-4 rounded-full bg-white" />
+                                )}
+                              </button>
+                            </td>
+                          ))}
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
               </div>
-              <div className="flex justify-between text-sm text-gray-500 mt-6 px-4">
+              <div className="flex justify-between text-sm text-gray-500 mt-4 px-4">
                 <span>Strongly Disagree</span>
                 <span>Strongly Agree</span>
               </div>
