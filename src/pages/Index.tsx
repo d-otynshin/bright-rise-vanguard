@@ -179,6 +179,10 @@ const Index = () => {
     }));
   };
 
+  const handleJobClick = (jobTitle: string) => {
+    navigate(`/job/${encodeURIComponent(jobTitle)}`);
+  };
+
   const handleNextPage = () => {
     if (currentPage < totalPages - 1) {
       setCurrentPage(currentPage + 1);
