@@ -1,4 +1,3 @@
-
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -147,7 +146,226 @@ const jobDatabase: { [key: string]: JobData } = {
       industries: ["Professional, Scientific, & Technical", "Government", "Construction"]
     }
   },
-  // Add more job data as needed
+  "Financial Analyst": {
+    title: "Financial Analysts",
+    alsoCalledList: ["Financial Analyst", "Investment Analyst", "Budget Analyst", "Credit Analyst"],
+    whatTheyDo: "Conduct quantitative analyses of information regarding investment programs or financial data of public or private institutions, including valuation of businesses.",
+    onTheJobDuties: [
+      "Analyze financial data and market trends to provide investment recommendations.",
+      "Prepare reports and presentations for management and clients.",
+      "Monitor portfolio performance and assess risk factors."
+    ],
+    knowledge: [
+      {
+        title: "Mathematics and Statistics",
+        items: ["statistics", "algebra", "calculus"]
+      },
+      {
+        title: "Business and Economics",
+        items: ["finance", "economics", "accounting"]
+      },
+      {
+        title: "Technology",
+        items: ["spreadsheet software", "financial modeling"]
+      }
+    ],
+    skills: [
+      {
+        title: "Analytical Skills",
+        items: ["analyzing complex financial data", "identifying trends and patterns"]
+      },
+      {
+        title: "Communication",
+        items: ["presenting findings clearly", "writing detailed reports"]
+      }
+    ],
+    abilities: [
+      {
+        title: "Mathematical",
+        items: ["work with numbers and calculations", "understand statistical concepts"]
+      },
+      {
+        title: "Critical Thinking",
+        items: ["evaluate information objectively", "make logical conclusions"]
+      }
+    ],
+    personality: {
+      description: "People interested in this work like activities that involve analyzing data and working with numbers.",
+      traits: ["Analytical Thinking", "Attention to Detail", "Independence", "Integrity", "Persistence", "Stress Tolerance"]
+    },
+    technology: [
+      {
+        title: "Spreadsheet software",
+        items: ["Microsoft Excel", "Google Sheets"]
+      },
+      {
+        title: "Financial analysis software",
+        items: ["Bloomberg Terminal", "FactSet"]
+      }
+    ],
+    education: {
+      level: "bachelor's degree",
+      description: "usually needed",
+      pathways: ["Find Training", "Find Certifications", "Find Licenses"]
+    },
+    jobOutlook: {
+      rating: "Good",
+      description: "Employment is expected to grow faster than average.",
+      salary: {
+        median: "$95,570",
+        range: { min: "$58,850", max: "$166,560" }
+      },
+      actions: ["Check out my state", "Local Salary Info", "Find Jobs"]
+    },
+    exploreMore: {
+      relatedCareers: ["Accountants", "Budget Analysts", "Investment Advisors", "Securities Sales Agents", "Personal Financial Advisors"],
+      industries: ["Finance & Insurance", "Professional Services", "Government"]
+    }
+  },
+  "Accountant": {
+    title: "Accountants",
+    alsoCalledList: ["Accountant", "Staff Accountant", "Senior Accountant", "Public Accountant"],
+    whatTheyDo: "Examine, analyze, and interpret accounting records to prepare financial statements, give advice, or audit accounts.",
+    onTheJobDuties: [
+      "Prepare and examine financial statements and records.",
+      "Ensure compliance with laws and regulations.",
+      "Advise clients on financial matters and tax strategies."
+    ],
+    knowledge: [
+      {
+        title: "Business and Accounting",
+        items: ["accounting principles", "taxation", "business law"]
+      },
+      {
+        title: "Mathematics",
+        items: ["arithmetic", "statistics", "algebra"]
+      }
+    ],
+    skills: [
+      {
+        title: "Basic Skills",
+        items: ["reading and understanding complex documents", "attention to detail"]
+      },
+      {
+        title: "Problem Solving",
+        items: ["identifying discrepancies", "solving complex problems"]
+      }
+    ],
+    abilities: [
+      {
+        title: "Mathematical",
+        items: ["work with numbers accurately", "perform calculations"]
+      },
+      {
+        title: "Verbal",
+        items: ["communicate clearly", "explain complex information"]
+      }
+    ],
+    personality: {
+      description: "People interested in this work like activities that involve following procedures and working with data.",
+      traits: ["Attention to Detail", "Integrity", "Analytical Thinking", "Dependability", "Stress Tolerance", "Self Control"]
+    },
+    technology: [
+      {
+        title: "Accounting software",
+        items: ["QuickBooks", "SAP", "Oracle"]
+      },
+      {
+        title: "Spreadsheet software",
+        items: ["Microsoft Excel", "Google Sheets"]
+      }
+    ],
+    education: {
+      level: "bachelor's degree",
+      description: "usually needed",
+      pathways: ["Find Training", "Find Certifications", "CPA License"]
+    },
+    jobOutlook: {
+      rating: "Good",
+      description: "Employment is expected to grow as fast as average.",
+      salary: {
+        median: "$77,250",
+        range: { min: "$47,970", max: "$128,970" }
+      },
+      actions: ["Check out my state", "Local Salary Info", "Find Jobs"]
+    },
+    exploreMore: {
+      relatedCareers: ["Bookkeepers", "Financial Analysts", "Budget Analysts", "Auditors", "Tax Preparers"],
+      industries: ["Professional Services", "Finance & Insurance", "Government"]
+    }
+  },
+  "Software Developer": {
+    title: "Software Developers",
+    alsoCalledList: ["Software Developer", "Software Engineer", "Programmer", "Application Developer"],
+    whatTheyDo: "Research, design, and develop computer and network software or specialized utility programs.",
+    onTheJobDuties: [
+      "Design and develop software applications and systems.",
+      "Test and debug programs to ensure they work correctly.",
+      "Collaborate with other developers and stakeholders."
+    ],
+    knowledge: [
+      {
+        title: "Computer Science",
+        items: ["programming languages", "software engineering", "algorithms"]
+      },
+      {
+        title: "Mathematics",
+        items: ["logic", "discrete mathematics", "statistics"]
+      }
+    ],
+    skills: [
+      {
+        title: "Technical Skills",
+        items: ["programming", "debugging", "system design"]
+      },
+      {
+        title: "Problem Solving",
+        items: ["analyzing complex problems", "developing creative solutions"]
+      }
+    ],
+    abilities: [
+      {
+        title: "Logical Reasoning",
+        items: ["think systematically", "solve complex problems"]
+      },
+      {
+        title: "Learning",
+        items: ["adapt to new technologies", "continuous learning"]
+      }
+    ],
+    personality: {
+      description: "People interested in this work like activities that involve thinking, organizing, and understanding.",
+      traits: ["Analytical Thinking", "Innovation", "Persistence", "Attention to Detail", "Independence", "Initiative"]
+    },
+    technology: [
+      {
+        title: "Programming languages",
+        items: ["JavaScript", "Python", "Java", "C++"]
+      },
+      {
+        title: "Development tools",
+        items: ["Git", "Visual Studio Code", "Docker"]
+      }
+    ],
+    education: {
+      level: "bachelor's degree",
+      description: "usually needed",
+      pathways: ["Find Training", "Find Certifications", "Bootcamps"]
+    },
+    jobOutlook: {
+      rating: "Excellent",
+      description: "Employment is expected to grow much faster than average.",
+      salary: {
+        median: "$130,160",
+        range: { min: "$70,100", max: "$208,620" }
+      },
+      actions: ["Check out my state", "Local Salary Info", "Find Jobs"]
+    },
+    exploreMore: {
+      relatedCareers: ["Web Developers", "Computer Systems Analysts", "Database Administrators", "Information Security Analysts"],
+      industries: ["Technology", "Finance", "Healthcare", "Government"]
+    }
+  }
 };
 
 const JobDetails = () => {
