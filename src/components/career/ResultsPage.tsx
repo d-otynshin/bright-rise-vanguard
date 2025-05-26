@@ -14,7 +14,7 @@ import jobCodes from "@/constants/onet_riasec.json";
 
 interface ResultsPageProps {
   results: { topType: string, scores: Results };
-  onJobClick: (jobTitle: string) => void;
+  onJobClick: (jobId: string) => void;
   onResetTest: () => void;
   questions: Question[];
   selectedLanguage: 'ru' | 'kz';
@@ -90,7 +90,7 @@ const ResultsPage = ({
     onTypeChange(type);
   };
 
-  const t = translations[selectedLanguage] || translations.en; // Fallback to English
+  const t = translations[selectedLanguage] || translations.en;
 
   const preparationLevels = [
     {

@@ -1,0 +1,75 @@
+
+{
+  "11-1011.00": {
+    "title": "Chief Executives",
+    "alsoCalledList": ["Chief Executive Officer (CEO)", "Executive Director", "President", "Managing Director"],
+    "whatTheyDo": "Determine and formulate policies and provide overall direction of companies or private and public sector organizations within guidelines set up by a board of directors or similar governing body.",
+    "onTheJobDuties": [
+      "Direct and coordinate an organization's financial and budget activities to fund operations, maximize investments, and increase efficiency.",
+      "Confer with board members, organization officials, or staff members to discuss issues, coordinate activities, or resolve problems.",
+      "Analyze operations to evaluate performance of a company or its staff in meeting objectives or to determine areas of potential cost reduction, program improvement, or policy change."
+    ],
+    "knowledge": [
+      {
+        "title": "Business and Management",
+        "items": ["administration and management", "economics and accounting", "personnel and human resources"]
+      },
+      {
+        "title": "Communication",
+        "items": ["English language", "communications and media"]
+      }
+    ],
+    "skills": [
+      {
+        "title": "Complex Problem Solving",
+        "items": ["identifying complex problems", "developing and evaluating options", "implementing solutions"]
+      },
+      {
+        "title": "Social Skills",
+        "items": ["coordinating with others", "persuasion", "negotiation"]
+      }
+    ],
+    "abilities": [
+      {
+        "title": "Cognitive",
+        "items": ["oral comprehension", "oral expression", "written comprehension", "written expression"]
+      },
+      {
+        "title": "Leadership",
+        "items": ["problem sensitivity", "deductive reasoning", "inductive reasoning"]
+      }
+    ],
+    "personality": {
+      "description": "People interested in this work like activities that include leading, making decisions, and business.",
+      "traits": ["Leadership", "Stress Tolerance", "Integrity", "Initiative", "Persistence", "Attention to Detail"]
+    },
+    "technology": [
+      {
+        "title": "Enterprise resource planning ERP software",
+        "items": ["SAP software", "Oracle PeopleSoft"]
+      },
+      {
+        "title": "Office suite software",
+        "items": ["Microsoft Office", "Google Workspace"]
+      }
+    ],
+    "education": {
+      "level": "bachelor's degree",
+      "description": "plus work experience in management",
+      "pathways": ["Find Training", "Find Certifications", "Executive Programs"]
+    },
+    "jobOutlook": {
+      "rating": "Good",
+      "description": "Employment is expected to grow as fast as average.",
+      "salary": {
+        "median": "$213,020",
+        "range": { "min": "$70,240", "max": "$208,000+" }
+      },
+      "actions": ["Check out my state", "Local Salary Info", "Find Jobs"]
+    },
+    "exploreMore": {
+      "relatedCareers": ["General and Operations Managers", "Administrative Services Managers", "Financial Managers", "Human Resources Managers"],
+      "industries": ["Management", "Finance", "Healthcare", "Technology"]
+    }
+  }
+}
