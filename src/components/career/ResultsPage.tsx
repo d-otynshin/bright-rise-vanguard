@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -140,8 +141,8 @@ const ResultsPage = ({
         maxWidth="5xl"
       />
 
-      <div className="container mx-auto px-4 py-16">
-        <div className="max-w-4xl mx-auto">
+      <div className="container mx-auto px-4 py-8">
+        <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
               {t.mainTitle}
@@ -196,8 +197,8 @@ const ResultsPage = ({
             })}
           </div>
 
-          <Card className="border-0 shadow-xl bg-white/90 backdrop-blur-sm mb-6">
-            <CardHeader className="pb-4">
+          <Card className="border-0 shadow-xl bg-white/90 backdrop-blur-sm mb-8">
+            <CardHeader className="pb-6">
               <div className="flex items-center gap-2 mb-1">
                 <div className="w-8 h-8 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 flex items-center justify-center">
                   <Briefcase className="w-4 h-4 text-white" />
@@ -208,50 +209,51 @@ const ResultsPage = ({
                 {t.careersDescription}
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-0">
               <Tabs defaultValue="entry" className="w-full">
-                <TabsList className="grid w-full grid-cols-5 mb-2">
+                <TabsList className="grid w-full grid-cols-5 mb-6 h-auto p-1 bg-gray-100">
                   {preparationLevels.map((level) => {
                     const IconComponent = level.icon;
                     return (
                       <TabsTrigger
                         key={level.id}
                         value={level.id}
-                        className="flex flex-col items-center gap-1.5 py-3"
+                        className="flex flex-col items-center gap-2 py-4 px-3 data-[state=active]:bg-white data-[state=active]:shadow-sm rounded-md"
                       >
-                        <div className={`w-7 h-7 rounded-full bg-gradient-to-r ${level.color} flex items-center justify-center`}>
-                          <IconComponent className="w-3.5 h-3.5 text-white" />
+                        <div className={`w-8 h-8 rounded-full bg-gradient-to-r ${level.color} flex items-center justify-center`}>
+                          <IconComponent className="w-4 h-4 text-white" />
                         </div>
-                        <span className="text-[11px] font-medium">{level.title}</span>
+                        <span className="text-xs font-medium leading-tight text-center">{level.title}</span>
                       </TabsTrigger>
                     );
                   })}
                 </TabsList>
-                {preparationLevels.map((level) => (
-                  <TabsContent key={level.id} value={level.id} className="mt-16">
-                    <div>
-                      <div className="flex items-center gap-2 mb-4">
-                        <Badge variant="secondary" className={`bg-${level.color.split('-')[1]}-50 text-${level.color.split('-')[1]}-700`}>
+                
+                <div className="min-h-[400px]">
+                  {preparationLevels.map((level) => (
+                    <TabsContent key={level.id} value={level.id} className="mt-0 space-y-6">
+                      <div className="flex items-center gap-3 mb-6">
+                        <Badge variant="secondary" className="bg-gray-100 text-gray-700 text-sm px-3 py-1">
                           {level.description}
                         </Badge>
                       </div>
 
                       {/* Display Best Match jobs */}
                       {categorizedJobs.bestMatch.filter(match => jobCodes[match.id]?.job_zone === (preparationLevels.indexOf(level) + 1)).length > 0 && (
-                        <div className="mb-6">
-                          <h3 className="text-lg font-semibold mb-3">Best Match</h3>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                        <div className="space-y-4">
+                          <h3 className="text-lg font-semibold text-gray-800">Best Match</h3>
+                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                             {categorizedJobs.bestMatch
                               .filter(match => jobCodes[match.id]?.job_zone === (preparationLevels.indexOf(level) + 1))
                               .map((match) => (
                                 <div
                                   key={match.id}
                                   onClick={() => onJobClick(match.id)}
-                                  className={`p-3 bg-gradient-to-r from-${level.color.split('-')[1]}-50 to-${level.color.split('-')[1]}-100 rounded-lg border border-${level.color.split('-')[1]}-200 hover:shadow-md transition-all duration-200 hover:scale-105 cursor-pointer`}
+                                  className="p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg border border-blue-200 hover:shadow-md transition-all duration-200 hover:scale-105 cursor-pointer group"
                                 >
-                                  <div className="flex items-center gap-2">
-                                    <level.icon className={`w-3.5 h-3.5 text-${level.color.split('-')[1]}-600`} />
-                                    <span className="font-medium text-sm text-gray-800">
+                                  <div className="flex items-center gap-3">
+                                    <level.icon className="w-4 h-4 text-blue-600 group-hover:text-blue-700" />
+                                    <span className="font-medium text-sm text-gray-800 group-hover:text-gray-900">
                                       {selectedLanguage === 'ru'
                                         ? jobCodes[match.id]?.title_ru
                                         : selectedLanguage === 'kz'
@@ -267,20 +269,20 @@ const ResultsPage = ({
 
                       {/* Display Related Matches jobs */}
                       {categorizedJobs.relatedMatches.filter(match => jobCodes[match.id]?.job_zone === (preparationLevels.indexOf(level) + 1)).length > 0 && (
-                        <div className="mb-6">
-                          <h3 className="text-lg font-semibold mb-3">Related Matches</h3>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                        <div className="space-y-4">
+                          <h3 className="text-lg font-semibold text-gray-800">Related Matches</h3>
+                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                             {categorizedJobs.relatedMatches
                               .filter(match => jobCodes[match.id]?.job_zone === (preparationLevels.indexOf(level) + 1))
                               .map((match) => (
                                 <div
                                   key={match.id}
                                   onClick={() => onJobClick(match.id)}
-                                  className={`p-3 bg-gradient-to-r from-${level.color.split('-')[1]}-50 to-${level.color.split('-')[1]}-100 rounded-lg border border-${level.color.split('-')[1]}-200 hover:shadow-md transition-all duration-200 hover:scale-105 cursor-pointer`}
+                                  className="p-4 bg-gradient-to-r from-green-50 to-green-100 rounded-lg border border-green-200 hover:shadow-md transition-all duration-200 hover:scale-105 cursor-pointer group"
                                 >
-                                  <div className="flex items-center gap-2">
-                                    <level.icon className={`w-3.5 h-3.5 text-${level.color.split('-')[1]}-600`} />
-                                    <span className="font-medium text-sm text-gray-800">
+                                  <div className="flex items-center gap-3">
+                                    <level.icon className="w-4 h-4 text-green-600 group-hover:text-green-700" />
+                                    <span className="font-medium text-sm text-gray-800 group-hover:text-gray-900">
                                       {selectedLanguage === 'ru'
                                         ? jobCodes[match.id]?.title_ru
                                         : selectedLanguage === 'kz'
@@ -296,20 +298,20 @@ const ResultsPage = ({
 
                       {/* Display Other Matches jobs */}
                       {categorizedJobs.otherMatches.filter(match => jobCodes[match.id]?.job_zone === (preparationLevels.indexOf(level) + 1)).length > 0 && (
-                        <div className="mb-6">
-                          <h3 className="text-lg font-semibold mb-3">Other Matches</h3>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                        <div className="space-y-4">
+                          <h3 className="text-lg font-semibold text-gray-800">Other Matches</h3>
+                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                             {categorizedJobs.otherMatches
                               .filter(match => jobCodes[match.id]?.job_zone === (preparationLevels.indexOf(level) + 1))
                               .map((match) => (
                                 <div
                                   key={match.id}
                                   onClick={() => onJobClick(match.id)}
-                                  className={`p-3 bg-gradient-to-r from-${level.color.split('-')[1]}-50 to-${level.color.split('-')[1]}-100 rounded-lg border border-${level.color.split('-')[1]}-200 hover:shadow-md transition-all duration-200 hover:scale-105 cursor-pointer`}
+                                  className="p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg border border-gray-200 hover:shadow-md transition-all duration-200 hover:scale-105 cursor-pointer group"
                                 >
-                                  <div className="flex items-center gap-2">
-                                    <level.icon className={`w-3.5 h-3.5 text-${level.color.split('-')[1]}-600`} />
-                                    <span className="font-medium text-sm text-gray-800">
+                                  <div className="flex items-center gap-3">
+                                    <level.icon className="w-4 h-4 text-gray-600 group-hover:text-gray-700" />
+                                    <span className="font-medium text-sm text-gray-800 group-hover:text-gray-900">
                                       {selectedLanguage === 'ru'
                                         ? jobCodes[match.id]?.title_ru
                                         : selectedLanguage === 'kz'
@@ -322,9 +324,9 @@ const ResultsPage = ({
                           </div>
                         </div>
                       )}
-                    </div>
-                  </TabsContent>
-                ))}
+                    </TabsContent>
+                  ))}
+                </div>
               </Tabs>
             </CardContent>
           </Card>
@@ -334,7 +336,7 @@ const ResultsPage = ({
               onClick={onResetTest}
               variant="outline"
               size="lg"
-              className="px-6 py-3"
+              className="px-8 py-3 text-base font-medium"
             >
               {t.resetButton}
             </Button>
