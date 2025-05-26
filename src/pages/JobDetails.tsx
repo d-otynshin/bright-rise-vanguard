@@ -426,7 +426,7 @@ const JobDetails = () => {
                       {job.exploreMore.industries.map((industry, index) => (
                         <li key={index} className="flex items-start">
                           <span className={`w-1.5 h-1.5 bg-blue-600 rounded-full mt-2 mr-2 flex-shrink-0 ${!isRealData ? 'bg-gray-400' : ''}`}></span>
-                          <span className={`text-sm text-blue-600 hover:underline cursor-pointer ${mockTextClass}`}>{career}</span>
+                          <span className={`text-sm text-blue-600 hover:underline cursor-pointer ${mockTextClass}`}>{industry}</span>
                         </li>
                       ))}
                     </ul>
