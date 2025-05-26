@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { careerSuggestions } from "@/constants/career-data";
 import { Dispatch, SetStateAction } from "react";
 import Header from "@/components/shared/Header";
+import { CareerType } from "@/types/career";
 
 interface LandingPageProps {
   onStartTest: () => void;
@@ -19,15 +20,22 @@ const translations = {
     title: "RAISEC Career Interest Test",
     description: "Discover your career interests and find the perfect job match based on Holland's theory of career choice",
     readyTitle: "Ready to discover your career path?",
-    readyDescription: "Answer 24 questions to identify your interests and get personalized career recommendations",
+    readyDescription: "Answer 50 questions to identify your interests and get personalized career recommendations",
     startButton: "Start Test",
   },
   ru: {
     title: "Тест профессиональных интересов RAISEC",
     description: "Определите свои профессиональные интересы и найдите идеальную работу на основе теории выбора карьеры Холланда",
     readyTitle: "Готовы определить свой карьерный путь?",
-    readyDescription: "Ответьте на 24 вопроса, чтобы выявить свои интересы и получить персональные рекомендации по карьере",
+    readyDescription: "Ответьте на 50 вопросов, чтобы выявить свои интересы и получить персональные рекомендации по карьере",
     startButton: "Начать тест",
+  },
+  kz: {
+    title: "RAISEC кәсіби қызығушылық тесті",
+    description: "Холландтың кәсіп таңдау теориясына сүйене отырып, өз кәсіби қызығушылықтарыңызды анықтаңыз және тамаша жұмыс орнын табыңыз",
+    readyTitle: "Өз кәсіби жолыңызды анықтауға дайынсыз ба?",
+    readyDescription: "Өз қызығушылықтарыңызды анықтау және кәсіби ұсыныстар алу үшін 50 сұраққа жауап беріңіз",
+    startButton: "Тестті бастау",
   },
 };
 
@@ -52,6 +60,11 @@ const LandingPage = ({
   };
 
   const t = translations[selectedLanguage] || translations.en; // Fallback to English
+
+  const getTranslatedText = (type: CareerType, field: 'title' | 'description') => {
+    const key = `${field}_${selectedLanguage}`;
+    return type[key as keyof CareerType] || type[field];
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
@@ -79,19 +92,17 @@ const LandingPage = ({
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {Object.entries(careerSuggestions).map(([key, type]) => {
               const IconComponent = type.icon;
-              // Note: careerSuggestions titles/descriptions are not translated here
-              // This would require updating the career-data.ts structure
               return (
                 <Card key={key} className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
                   <CardHeader className="pb-4">
                     <div className={`w-12 h-12 rounded-full ${type.color} flex items-center justify-center mb-3 mx-auto`}>
                       <IconComponent className="w-6 h-6 text-white" />
                     </div>
-                    <CardTitle className="text-lg">{type.title}</CardTitle>
+                    <CardTitle className="text-lg">{getTranslatedText(type, 'title')}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <CardDescription className="text-sm">
-                      {type.description}
+                      {getTranslatedText(type, 'description')}
                     </CardDescription>
                   </CardContent>
                 </Card>

@@ -47,6 +47,16 @@ const translations = {
     nextButton: "Далее",
     viewResultsButton: "Посмотреть результаты",
   },
+  kz: {
+    pageInfo: (currentPage: number, totalPages: number) => `${currentPage} беті ${totalPages} ішінен`,
+    rateDescription: "Әр тұжырымды бағалаңыз (1 = Мүлдем келіспеймін, 5 = Толықтай келісемін)",
+    questionHeader: "Сұрақ",
+    stronglyDisagree: "Мүлдем келіспеймін",
+    stronglyAgree: "Толықтай келісемін",
+    previousButton: "Алдыңғы",
+    nextButton: "Келесі",
+    viewResultsButton: "Нәтижелерді көру",
+  },
 };
 
 const Questionnaire = ({ 

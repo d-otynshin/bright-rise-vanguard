@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -40,6 +39,9 @@ const translations = {
     resetButton: "Take Test Again",
     score: "Score",
     recommendedCareers: "Recommended Careers",
+    bestMatch: "Best Match",
+    relatedMatches: "Related Matches",
+    otherMatches: "Other Matches",
   },
   ru: {
     mainTitle: "Ваши результаты RAISEC",
@@ -56,6 +58,28 @@ const translations = {
     resetButton: "Пройти тест снова",
     score: "Балл",
     recommendedCareers: "Рекомендуемые профессии",
+    bestMatch: "Лучшее совпадение",
+    relatedMatches: "Связанные совпадения",
+    otherMatches: "Другие совпадения",
+  },
+  kz: {
+    mainTitle: "Сіздің RAISEC нәтижелеріңіз",
+    mainDescription: "Сіздің жауаптарыңызға сүйене отырып, міне сіздің кәсіби қызығушылық салаларыңыз",
+    careersTitle: "Қызығушылықтарыңызға және дайындық деңгейіңізге сәйкес келетін кәсіптер",
+    careersDescription: "Сіздің негізгі қызығушылық салаларыңызға сүйене отырып, дайындық деңгейі бойынша ұйымдастырылған жұмыс орындары. Көбірек білу үшін кез келген жұмыс орнын басыңыз.",
+    preparationLevels: {
+      entry: { title: "Бастапқы деңгей", description: "Минималды дайындық қажет" },
+      associate: { title: "Орта деңгей", description: "Белгілі бір дайындық қажет" },
+      professional: { title: "Кәсіби деңгей", description: "Орташа дайындық қажет" },
+      senior: { title: "Жоғары деңгей", description: "Жетілдірілген дайындық қажет" },
+      executive: { title: "Басшылық деңгейі", description: "Кең дайындық қажет" },
+    },
+    resetButton: "Тестті қайта өту",
+    score: "Ұпай",
+    recommendedCareers: "Ұсынылған кәсіптер",
+    bestMatch: "Ең жақсы сәйкестік",
+    relatedMatches: "Қатысты сәйкестіктер",
+    otherMatches: "Басқа сәйкестіктер",
   },
 };
 
@@ -168,13 +192,25 @@ const ResultsPage = ({
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-2">
-                          <CardTitle className="text-xl">{typeInfo.title}</CardTitle>
+                          <CardTitle className="text-xl">
+                            {selectedLanguage === 'ru'
+                              ? typeInfo.title_ru
+                              : selectedLanguage === 'kz'
+                                ? typeInfo.title_kz
+                                : typeInfo.title}
+                          </CardTitle>
                           <Badge variant={isTopThree ? "default" : "secondary"} className="text-sm">
                             {t.score}: {score}
                           </Badge>
                         </div>
                         <Progress value={percentage} className="h-2 mb-2" />
-                        <CardDescription>{typeInfo.description}</CardDescription>
+                        <CardDescription>
+                          {selectedLanguage === 'ru'
+                            ? typeInfo.description_ru
+                            : selectedLanguage === 'kz'
+                              ? typeInfo.description_kz
+                              : typeInfo.description}
+                        </CardDescription>
                       </div>
                     </div>
                   </CardHeader>
@@ -241,10 +277,11 @@ const ResultsPage = ({
                       {/* Display Best Match jobs */}
                       {categorizedJobs.bestMatch.filter(match => jobCodes[match.id]?.job_zone === (preparationLevels.indexOf(level) + 1)).length > 0 && (
                         <div className="space-y-4">
-                          <h3 className="text-lg font-semibold text-gray-800">Best Match</h3>
+                          <h3 className="text-lg font-semibold text-gray-800">{t.bestMatch}</h3>
                           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                             {categorizedJobs.bestMatch
                               .filter(match => jobCodes[match.id]?.job_zone === (preparationLevels.indexOf(level) + 1))
+                              .slice(0, 10)
                               .map((match) => (
                                 <div
                                   key={match.id}
@@ -270,10 +307,11 @@ const ResultsPage = ({
                       {/* Display Related Matches jobs */}
                       {categorizedJobs.relatedMatches.filter(match => jobCodes[match.id]?.job_zone === (preparationLevels.indexOf(level) + 1)).length > 0 && (
                         <div className="space-y-4">
-                          <h3 className="text-lg font-semibold text-gray-800">Related Matches</h3>
+                          <h3 className="text-lg font-semibold text-gray-800">{t.relatedMatches}</h3>
                           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                             {categorizedJobs.relatedMatches
                               .filter(match => jobCodes[match.id]?.job_zone === (preparationLevels.indexOf(level) + 1))
+                              .slice(0, 10)
                               .map((match) => (
                                 <div
                                   key={match.id}
@@ -299,10 +337,11 @@ const ResultsPage = ({
                       {/* Display Other Matches jobs */}
                       {categorizedJobs.otherMatches.filter(match => jobCodes[match.id]?.job_zone === (preparationLevels.indexOf(level) + 1)).length > 0 && (
                         <div className="space-y-4">
-                          <h3 className="text-lg font-semibold text-gray-800">Other Matches</h3>
+                          <h3 className="text-lg font-semibold text-gray-800">{t.otherMatches}</h3>
                           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                             {categorizedJobs.otherMatches
                               .filter(match => jobCodes[match.id]?.job_zone === (preparationLevels.indexOf(level) + 1))
+                              .slice(0, 10)
                               .map((match) => (
                                 <div
                                   key={match.id}

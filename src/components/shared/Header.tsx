@@ -1,4 +1,3 @@
-
 import { Dispatch, SetStateAction } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
@@ -40,6 +39,38 @@ const Header = ({
 
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-3">
+              <Select value={selectedType} onValueChange={handleTypeChange}>
+                <SelectTrigger className="w-[200px] border-gray-200 shadow-sm hover:border-gray-300 transition-colors overflow-hidden text-ellipsis whitespace-nowrap">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-white border shadow-lg">
+                  <SelectItem value="primary" className="cursor-pointer hover:bg-gray-50">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-blue-500"></div>
+                      <span>
+                        {selectedLanguage === 'ru'
+                          ? 'Ученик 1-4 класса'
+                          : selectedLanguage === 'kz'
+                            ? '1-4 сынып оқушысы'
+                            : 'Primary'}
+                      </span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="secondary" className="cursor-pointer hover:bg-gray-50">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                      <span>
+                        {selectedLanguage === 'ru'
+                          ? 'Ученик 5-11 класса'
+                          : selectedLanguage === 'kz'
+                            ? '5-11 сынып оқушысы'
+                            : 'Secondary'}
+                      </span>
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+
               <Select value={selectedLanguage} onValueChange={handleLanguageChange}>
                 <SelectTrigger className="w-[140px] border-gray-200 shadow-sm hover:border-gray-300 transition-colors">
                   <SelectValue />
@@ -47,34 +78,12 @@ const Header = ({
                 <SelectContent className="bg-white border shadow-lg">
                   <SelectItem value="ru" className="cursor-pointer hover:bg-gray-50">
                     <div className="flex items-center gap-2">
-                      <span className="text-lg">🇷🇺</span>
                       <span>Русский</span>
                     </div>
                   </SelectItem>
                   <SelectItem value="kz" className="cursor-pointer hover:bg-gray-50">
                     <div className="flex items-center gap-2">
-                      <span className="text-lg">🇰🇿</span>
-                      <span>Қазақ</span>
-                    </div>
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-
-              <Select value={selectedType} onValueChange={handleTypeChange}>
-                <SelectTrigger className="w-[130px] border-gray-200 shadow-sm hover:border-gray-300 transition-colors">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-white border shadow-lg">
-                  <SelectItem value="primary" className="cursor-pointer hover:bg-gray-50">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-blue-500"></div>
-                      <span>Primary</span>
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="secondary" className="cursor-pointer hover:bg-gray-50">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                      <span>Secondary</span>
+                      <span>Қазақша</span>
                     </div>
                   </SelectItem>
                 </SelectContent>

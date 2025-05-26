@@ -1,4 +1,3 @@
-
 export interface Question {
   id: number;
   text: string;
@@ -16,7 +15,11 @@ export interface Results {
 
 export interface CareerType {
   title: string;
+  title_ru?: string;
+  title_kz?: string;
   description: string;
+  description_ru?: string;
+  description_kz?: string;
   icon: any;
   color: string;
   careers: string[];
