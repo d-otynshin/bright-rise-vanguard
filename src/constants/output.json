@@ -71,5 +71,77 @@
       "relatedCareers": ["General and Operations Managers", "Administrative Services Managers", "Financial Managers", "Human Resources Managers"],
       "industries": ["Management", "Finance", "Healthcare", "Technology"]
     }
+  },
+  "17-1011.00": {
+    "title": "Architects, Except Landscape and Naval",
+    "alsoCalledList": ["Architect", "Design Architect", "Project Architect", "Registered Architect"],
+    "whatTheyDo": "Plan and design structures, such as private residences, office buildings, theaters, factories, and other structural property.",
+    "onTheJobDuties": [
+      "Prepare information regarding design, structure specifications, materials, color, equipment, estimated costs, or construction time.",
+      "Consult with client to determine functional or spatial requirements of structure.",
+      "Prepare contract documents for building contractors."
+    ],
+    "knowledge": [
+      {
+        "title": "Design",
+        "items": ["design techniques", "tools and principles", "precision technical plans"]
+      },
+      {
+        "title": "Building and Construction",
+        "items": ["materials", "methods", "tools for construction or repair"]
+      }
+    ],
+    "skills": [
+      {
+        "title": "Critical Thinking",
+        "items": ["using logic and reasoning", "identifying strengths and weaknesses", "alternative solutions"]
+      },
+      {
+        "title": "Complex Problem Solving",
+        "items": ["identifying complex problems", "reviewing related information", "developing solutions"]
+      }
+    ],
+    "abilities": [
+      {
+        "title": "Cognitive",
+        "items": ["oral comprehension", "written comprehension", "fluency of ideas", "originality"]
+      },
+      {
+        "title": "Visual",
+        "items": ["visualization", "spatial orientation", "near vision"]
+      }
+    ],
+    "personality": {
+      "description": "People interested in this work like activities that include ideas, thinking, organizing, and understanding.",
+      "traits": ["Analytical Thinking", "Innovation", "Attention to Detail", "Independence", "Integrity", "Initiative"]
+    },
+    "technology": [
+      {
+        "title": "Computer aided design CAD software",
+        "items": ["Autodesk AutoCAD", "Bentley MicroStation"]
+      },
+      {
+        "title": "Analytical or scientific software",
+        "items": ["Structural analysis software", "Energy modeling software"]
+      }
+    ],
+    "education": {
+      "level": "bachelor's degree",
+      "description": "in architecture plus internship",
+      "pathways": ["Find Training", "Find Certifications", "Professional Programs"]
+    },
+    "jobOutlook": {
+      "rating": "Average",
+      "description": "Employment is expected to grow about as fast as average.",
+      "salary": {
+        "median": "$89,560",
+        "range": { "min": "$49,950", "max": "$129,980+" }
+      },
+      "actions": ["Check out my state", "Local Salary Info", "Find Jobs"]
+    },
+    "exploreMore": {
+      "relatedCareers": ["Landscape Architects", "Urban and Regional Planners", "Civil Engineers", "Construction Managers"],
+      "industries": ["Architecture", "Engineering", "Construction", "Real Estate"]
+    }
   }
 }
