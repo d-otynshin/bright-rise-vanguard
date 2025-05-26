@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Share, Printer, ExternalLink, Star, DollarSign, TrendingUp } from "lucide-react";
 import Header from "@/components/shared/Header";
+import output from "@/constants/output.json";
 
 interface JobData {
   title: string;
@@ -50,330 +51,108 @@ interface JobData {
   };
 }
 
-const jobDatabase: { [key: string]: JobData } = {
-  "Civil Engineer": {
-    title: "Civil Engineers",
-    alsoCalledList: ["Civil Engineer", "Design Engineer", "Project Engineer", "Structural Engineer"],
-    whatTheyDo: "Perform engineering duties in planning, designing, and overseeing construction and maintenance of building structures and facilities, such as roads, railroads, airports, bridges, harbors, channels, dams, irrigation projects, pipelines, power plants, and water and sewage systems.",
-    onTheJobDuties: [
-      "Direct engineering activities, ensuring compliance with environmental, safety, or other governmental regulations.",
-      "Manage and direct the construction, operations, or maintenance activities at project site.",
-      "Inspect project sites to monitor progress and ensure conformance to design specifications and safety or sanitation standards."
-    ],
-    knowledge: [
-      {
-        title: "Engineering and Technology",
-        items: ["design", "product and service development"]
-      },
-      {
-        title: "Math and Science",
-        items: ["arithmetic, algebra, geometry, calculus, or statistics", "physics"]
-      },
-      {
-        title: "Arts and Humanities",
-        items: ["English language"]
-      },
-      {
-        title: "Business",
-        items: ["management"]
-      }
-    ],
-    skills: [
-      {
-        title: "Basic Skills",
-        items: ["listening to others, not interrupting, and asking good questions", "reading work related information"]
-      },
-      {
-        title: "Problem Solving",
-        items: ["noticing a problem and figuring out the best way to solve it"]
-      },
-      {
-        title: "People and Technology Systems",
-        items: ["figuring out how a system should work and how changes in the future will affect it", "thinking about the pros and cons of different options and picking the best one"]
-      }
-    ],
-    abilities: [
-      {
-        title: "Verbal",
-        items: ["communicate by speaking", "communicate by writing"]
-      },
-      {
-        title: "Ideas and Logic",
-        items: ["make general rules or come up with answers from lots of detailed information", "notice when problems happen"]
-      },
-      {
-        title: "Math",
-        items: ["choose the right type of math to solve a problem", "add, subtract, multiply, or divide"]
-      },
-      {
-        title: "Visual Understanding",
-        items: ["quickly compare groups of letters, numbers, pictures, or other things"]
-      }
-    ],
-    personality: {
-      description: "People interested in this work like activities that include practical, hands-on problems and solutions.",
-      traits: ["Integrity", "Attention to Detail", "Dependability", "Initiative", "Analytical Thinking", "Self Control"]
+const mockJob = {
+  title: "Civil Engineers",
+  alsoCalledList: ["Civil Engineer", "Design Engineer", "Project Engineer", "Structural Engineer"],
+  whatTheyDo: "Perform engineering duties in planning, designing, and overseeing construction and maintenance of building structures and facilities, such as roads, railroads, airports, bridges, harbors, channels, dams, irrigation projects, pipelines, power plants, and water and sewage systems.",
+  onTheJobDuties: [
+    "Direct engineering activities, ensuring compliance with environmental, safety, or other governmental regulations.",
+    "Manage and direct the construction, operations, or maintenance activities at project site.",
+    "Inspect project sites to monitor progress and ensure conformance to design specifications and safety or sanitation standards."
+  ],
+  knowledge: [
+    {
+      title: "Engineering and Technology",
+      items: ["design", "product and service development"]
     },
-    technology: [
-      {
-        title: "Computer aided design CAD software",
-        items: ["Autodesk AutoCAD Civil 3D", "Autodesk Revit"]
-      },
-      {
-        title: "Presentation software",
-        items: ["Microsoft PowerPoint"]
-      },
-      {
-        title: "Analytical or scientific software",
-        items: ["Procore software", "The MathWorks MATLAB"]
-      }
-    ],
-    education: {
-      level: "bachelor's degree",
-      description: "usually needed",
-      pathways: ["Find Training", "Find Certifications", "Find Licenses", "Apprenticeship.gov"]
+    {
+      title: "Math and Science",
+      items: ["arithmetic, algebra, geometry, calculus, or statistics", "physics"]
     },
-    jobOutlook: {
-      rating: "Bright",
-      description: "New job opportunities are very likely in the future.",
-      salary: {
-        median: "$99,590",
-        range: { min: "$65,920", max: "$160,990" }
-      },
-      actions: ["Check out my state", "Local Salary Info", "Find Jobs"]
+    {
+      title: "Arts and Humanities",
+      items: ["English language"]
     },
-    exploreMore: {
-      relatedCareers: ["Civil Engineering Technologists & Technicians", "Construction & Building Inspectors", "Construction Managers", "Transportation Engineers", "Water/Wastewater Engineers"],
-      industries: ["Professional, Scientific, & Technical", "Government", "Construction"]
+    {
+      title: "Business",
+      items: ["management"]
     }
+  ],
+  skills: [
+    {
+      title: "Basic Skills",
+      items: ["listening to others, not interrupting, and asking good questions", "reading work related information"]
+    },
+    {
+      title: "Problem Solving",
+      items: ["noticing a problem and figuring out the best way to solve it"]
+    },
+    {
+      title: "People and Technology Systems",
+      items: ["figuring out how a system should work and how changes in the future will affect it", "thinking about the pros and cons of different options and picking the best one"]
+    }
+  ],
+  abilities: [
+    {
+      title: "Verbal",
+      items: ["communicate by speaking", "communicate by writing"]
+    },
+    {
+      title: "Ideas and Logic",
+      items: ["make general rules or come up with answers from lots of detailed information", "notice when problems happen"]
+    },
+    {
+      title: "Math",
+      items: ["choose the right type of math to solve a problem", "add, subtract, multiply, or divide"]
+    },
+    {
+      title: "Visual Understanding",
+      items: ["quickly compare groups of letters, numbers, pictures, or other things"]
+    }
+  ],
+  personality: {
+    description: "People interested in this work like activities that include practical, hands-on problems and solutions.",
+    traits: ["Integrity", "Attention to Detail", "Dependability", "Initiative", "Analytical Thinking", "Self Control"]
   },
-  "Financial Analyst": {
-    title: "Financial Analysts",
-    alsoCalledList: ["Financial Analyst", "Investment Analyst", "Budget Analyst", "Credit Analyst"],
-    whatTheyDo: "Conduct quantitative analyses of information regarding investment programs or financial data of public or private institutions, including valuation of businesses.",
-    onTheJobDuties: [
-      "Analyze financial data and market trends to provide investment recommendations.",
-      "Prepare reports and presentations for management and clients.",
-      "Monitor portfolio performance and assess risk factors."
-    ],
-    knowledge: [
-      {
-        title: "Mathematics and Statistics",
-        items: ["statistics", "algebra", "calculus"]
-      },
-      {
-        title: "Business and Economics",
-        items: ["finance", "economics", "accounting"]
-      },
-      {
-        title: "Technology",
-        items: ["spreadsheet software", "financial modeling"]
-      }
-    ],
-    skills: [
-      {
-        title: "Analytical Skills",
-        items: ["analyzing complex financial data", "identifying trends and patterns"]
-      },
-      {
-        title: "Communication",
-        items: ["presenting findings clearly", "writing detailed reports"]
-      }
-    ],
-    abilities: [
-      {
-        title: "Mathematical",
-        items: ["work with numbers and calculations", "understand statistical concepts"]
-      },
-      {
-        title: "Critical Thinking",
-        items: ["evaluate information objectively", "make logical conclusions"]
-      }
-    ],
-    personality: {
-      description: "People interested in this work like activities that involve analyzing data and working with numbers.",
-      traits: ["Analytical Thinking", "Attention to Detail", "Independence", "Integrity", "Persistence", "Stress Tolerance"]
+  technology: [
+    {
+      title: "Computer aided design CAD software",
+      items: ["Autodesk AutoCAD Civil 3D", "Autodesk Revit"]
     },
-    technology: [
-      {
-        title: "Spreadsheet software",
-        items: ["Microsoft Excel", "Google Sheets"]
-      },
-      {
-        title: "Financial analysis software",
-        items: ["Bloomberg Terminal", "FactSet"]
-      }
-    ],
-    education: {
-      level: "bachelor's degree",
-      description: "usually needed",
-      pathways: ["Find Training", "Find Certifications", "Find Licenses"]
+    {
+      title: "Presentation software",
+      items: ["Microsoft PowerPoint"]
     },
-    jobOutlook: {
-      rating: "Good",
-      description: "Employment is expected to grow faster than average.",
-      salary: {
-        median: "$95,570",
-        range: { min: "$58,850", max: "$166,560" }
-      },
-      actions: ["Check out my state", "Local Salary Info", "Find Jobs"]
-    },
-    exploreMore: {
-      relatedCareers: ["Accountants", "Budget Analysts", "Investment Advisors", "Securities Sales Agents", "Personal Financial Advisors"],
-      industries: ["Finance & Insurance", "Professional Services", "Government"]
+    {
+      title: "Analytical or scientific software",
+      items: ["Procore software", "The MathWorks MATLAB"]
     }
+  ],
+  education: {
+    level: "bachelor's degree",
+    description: "usually needed",
+    pathways: ["Find Training", "Find Certifications", "Find Licenses", "Apprenticeship.gov"]
   },
-  "Accountant": {
-    title: "Accountants",
-    alsoCalledList: ["Accountant", "Staff Accountant", "Senior Accountant", "Public Accountant"],
-    whatTheyDo: "Examine, analyze, and interpret accounting records to prepare financial statements, give advice, or audit accounts.",
-    onTheJobDuties: [
-      "Prepare and examine financial statements and records.",
-      "Ensure compliance with laws and regulations.",
-      "Advise clients on financial matters and tax strategies."
-    ],
-    knowledge: [
-      {
-        title: "Business and Accounting",
-        items: ["accounting principles", "taxation", "business law"]
-      },
-      {
-        title: "Mathematics",
-        items: ["arithmetic", "statistics", "algebra"]
-      }
-    ],
-    skills: [
-      {
-        title: "Basic Skills",
-        items: ["reading and understanding complex documents", "attention to detail"]
-      },
-      {
-        title: "Problem Solving",
-        items: ["identifying discrepancies", "solving complex problems"]
-      }
-    ],
-    abilities: [
-      {
-        title: "Mathematical",
-        items: ["work with numbers accurately", "perform calculations"]
-      },
-      {
-        title: "Verbal",
-        items: ["communicate clearly", "explain complex information"]
-      }
-    ],
-    personality: {
-      description: "People interested in this work like activities that involve following procedures and working with data.",
-      traits: ["Attention to Detail", "Integrity", "Analytical Thinking", "Dependability", "Stress Tolerance", "Self Control"]
+  jobOutlook: {
+    rating: "Bright",
+    description: "New job opportunities are very likely in the future.",
+    salary: {
+      median: "$99,590",
+      range: { min: "$65,920", max: "$160,990" }
     },
-    technology: [
-      {
-        title: "Accounting software",
-        items: ["QuickBooks", "SAP", "Oracle"]
-      },
-      {
-        title: "Spreadsheet software",
-        items: ["Microsoft Excel", "Google Sheets"]
-      }
-    ],
-    education: {
-      level: "bachelor's degree",
-      description: "usually needed",
-      pathways: ["Find Training", "Find Certifications", "CPA License"]
-    },
-    jobOutlook: {
-      rating: "Good",
-      description: "Employment is expected to grow as fast as average.",
-      salary: {
-        median: "$77,250",
-        range: { min: "$47,970", max: "$128,970" }
-      },
-      actions: ["Check out my state", "Local Salary Info", "Find Jobs"]
-    },
-    exploreMore: {
-      relatedCareers: ["Bookkeepers", "Financial Analysts", "Budget Analysts", "Auditors", "Tax Preparers"],
-      industries: ["Professional Services", "Finance & Insurance", "Government"]
-    }
+    actions: ["Check out my state", "Local Salary Info", "Find Jobs"]
   },
-  "Software Developer": {
-    title: "Software Developers",
-    alsoCalledList: ["Software Developer", "Software Engineer", "Programmer", "Application Developer"],
-    whatTheyDo: "Research, design, and develop computer and network software or specialized utility programs.",
-    onTheJobDuties: [
-      "Design and develop software applications and systems.",
-      "Test and debug programs to ensure they work correctly.",
-      "Collaborate with other developers and stakeholders."
-    ],
-    knowledge: [
-      {
-        title: "Computer Science",
-        items: ["programming languages", "software engineering", "algorithms"]
-      },
-      {
-        title: "Mathematics",
-        items: ["logic", "discrete mathematics", "statistics"]
-      }
-    ],
-    skills: [
-      {
-        title: "Technical Skills",
-        items: ["programming", "debugging", "system design"]
-      },
-      {
-        title: "Problem Solving",
-        items: ["analyzing complex problems", "developing creative solutions"]
-      }
-    ],
-    abilities: [
-      {
-        title: "Logical Reasoning",
-        items: ["think systematically", "solve complex problems"]
-      },
-      {
-        title: "Learning",
-        items: ["adapt to new technologies", "continuous learning"]
-      }
-    ],
-    personality: {
-      description: "People interested in this work like activities that involve thinking, organizing, and understanding.",
-      traits: ["Analytical Thinking", "Innovation", "Persistence", "Attention to Detail", "Independence", "Initiative"]
-    },
-    technology: [
-      {
-        title: "Programming languages",
-        items: ["JavaScript", "Python", "Java", "C++"]
-      },
-      {
-        title: "Development tools",
-        items: ["Git", "Visual Studio Code", "Docker"]
-      }
-    ],
-    education: {
-      level: "bachelor's degree",
-      description: "usually needed",
-      pathways: ["Find Training", "Find Certifications", "Bootcamps"]
-    },
-    jobOutlook: {
-      rating: "Excellent",
-      description: "Employment is expected to grow much faster than average.",
-      salary: {
-        median: "$130,160",
-        range: { min: "$70,100", max: "$208,620" }
-      },
-      actions: ["Check out my state", "Local Salary Info", "Find Jobs"]
-    },
-    exploreMore: {
-      relatedCareers: ["Web Developers", "Computer Systems Analysts", "Database Administrators", "Information Security Analysts"],
-      industries: ["Technology", "Finance", "Healthcare", "Government"]
-    }
+  exploreMore: {
+    relatedCareers: ["Civil Engineering Technologists & Technicians", "Construction & Building Inspectors", "Construction Managers", "Transportation Engineers", "Water/Wastewater Engineers"],
+    industries: ["Professional, Scientific, & Technical", "Government", "Construction"]
   }
-};
+}
 
 const JobDetails = () => {
   const { jobTitle } = useParams<{ jobTitle: string }>();
   const navigate = useNavigate();
   
-  const job = jobTitle ? jobDatabase[decodeURIComponent(jobTitle)] : null;
+  const job = jobTitle ? mockJob : null;
 
   if (!job) {
     return (
@@ -418,7 +197,7 @@ const JobDetails = () => {
             </Button>
             
             <div className="flex justify-between items-start mb-4">
-              <h1 className="text-4xl font-bold text-blue-600">{job.title}</h1>
+              <h1 className="text-4xl font-bold text-blue-600">{output[jobTitle]?.['title_ru']}</h1>
               <div className="flex gap-2">
                 <Button variant="outline" size="sm">
                   <Printer className="w-4 h-4 mr-2" />
@@ -449,7 +228,7 @@ const JobDetails = () => {
                 <CardTitle>What they do:</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="mb-4">{job.whatTheyDo}</p>
+                <p className="mb-4">{output[jobTitle]?.['description_primary_ru']}</p>
               </CardContent>
             </Card>
 
