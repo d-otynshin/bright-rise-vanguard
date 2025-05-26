@@ -1,33 +1,5 @@
-
 import { Wrench, Palette, Brain, Users, Target, Calculator } from "lucide-react";
-import { Question, CareerType, JobsByPreparation } from "@/types/career";
-
-export const questions: Question[] = [
-  { id: 1, text: "I enjoy working with tools and machinery", category: 'R' },
-  { id: 2, text: "I like to create art, music, or write creatively", category: 'A' },
-  { id: 3, text: "I enjoy solving complex problems and puzzles", category: 'I' },
-  { id: 4, text: "I like helping people with their problems", category: 'S' },
-  { id: 5, text: "I enjoy leading and persuading others", category: 'E' },
-  { id: 6, text: "I like organizing data and working with numbers", category: 'C' },
-  { id: 7, text: "I prefer working outdoors or with my hands", category: 'R' },
-  { id: 8, text: "I enjoy expressing myself through creative mediums", category: 'A' },
-  { id: 9, text: "I like conducting research and experiments", category: 'I' },
-  { id: 10, text: "I enjoy teaching and mentoring others", category: 'S' },
-  { id: 11, text: "I like managing projects and people", category: 'E' },
-  { id: 12, text: "I prefer following detailed procedures and rules", category: 'C' },
-  { id: 13, text: "I enjoy building and fixing things", category: 'R' },
-  { id: 14, text: "I like performing or entertaining others", category: 'A' },
-  { id: 15, text: "I enjoy analyzing data and finding patterns", category: 'I' },
-  { id: 16, text: "I like counseling and supporting people", category: 'S' },
-  { id: 17, text: "I enjoy selling ideas or products", category: 'E' },
-  { id: 18, text: "I like keeping accurate records and files", category: 'C' },
-  { id: 19, text: "I prefer practical, hands-on work", category: 'R' },
-  { id: 20, text: "I enjoy designing and creating new things", category: 'A' },
-  { id: 21, text: "I like theoretical and abstract thinking", category: 'I' },
-  { id: 22, text: "I enjoy working in healthcare or social services", category: 'S' },
-  { id: 23, text: "I like taking risks and making deals", category: 'E' },
-  { id: 24, text: "I prefer structured and organized environments", category: 'C' }
-];
+import { CareerType, JobsByPreparation } from "@/types/career";
 
 export const careerSuggestions: Record<string, CareerType> = {
   R: {
@@ -137,4 +109,4 @@ export const jobsByPreparation: Record<string, JobsByPreparation> = {
   }
 };
 
-export const QUESTIONS_PER_PAGE = 10;
+export const QUESTIONS_PER_PAGE = 5;

@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Share, Printer, ExternalLink, Star, DollarSign, TrendingUp } from "lucide-react";
+import Header from "@/components/shared/Header";
 
 interface JobData {
   title: string;
@@ -395,6 +396,14 @@ const JobDetails = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+      <Header
+        selectedLanguage="ru"
+        selectedType="primary"
+        onLanguageChange={() => {}}
+        onTypeChange={() => {}}
+        onResetToMain={() => navigate("/")}
+        maxWidth="6xl"
+      />
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto">
           {/* Header */}

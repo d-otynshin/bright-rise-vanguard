@@ -1,39 +1,158 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Briefcase, Star, Award } from "lucide-react";
-import { Results } from "@/types/career";
+import { Briefcase, Star, Award, GraduationCap, Rocket, BookOpen } from "lucide-react";
+import { Results, Question } from "@/types/career";
+import { getTopThreeTypes, getCategorizedMatches } from "@/utils/career-utils";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useState, Dispatch, SetStateAction } from "react";
+import Header from "@/components/shared/Header";
 import { careerSuggestions } from "@/constants/career-data";
-import { getTopThreeTypes, getCategorizedJobs } from "@/utils/career-utils";
+import jobCodes from "@/constants/onet_riasec.json";
 
 interface ResultsPageProps {
-  results: Results;
+  results: { topType: string, scores: Results };
   onJobClick: (jobTitle: string) => void;
   onResetTest: () => void;
+  questions: Question[];
+  selectedLanguage: 'ru' | 'kz';
+  selectedType: 'primary' | 'secondary';
+  onLanguageChange: Dispatch<SetStateAction<'ru' | 'kz'>>;
+  onTypeChange: Dispatch<SetStateAction<'primary' | 'secondary'>>;
+  onResetToMain: () => void;
 }
 
-const ResultsPage = ({ results, onJobClick, onResetTest }: ResultsPageProps) => {
-  const topThree = getTopThreeTypes(results);
-  const maxScore = Math.max(...Object.values(results));
-  const categorizedJobs = getCategorizedJobs(results);
+const translations = {
+  en: {
+    mainTitle: "Your RAISEC Results",
+    mainDescription: "Based on your responses, here are your top career interest areas",
+    careersTitle: "Careers that fit your interests and preparation level",
+    careersDescription: "Jobs organized by preparation level based on your top interest areas. Click on any job to learn more.",
+    preparationLevels: {
+      entry: { title: "Entry Level", description: "Minimal preparation required" },
+      associate: { title: "Associate Level", description: "Some preparation required" },
+      professional: { title: "Professional Level", description: "Moderate preparation required" },
+      senior: { title: "Senior Level", description: "Advanced preparation required" },
+      executive: { title: "Executive Level", description: "Extensive preparation required" },
+    },
+    resetButton: "Take Test Again",
+    score: "Score",
+    recommendedCareers: "Recommended Careers",
+  },
+  ru: {
+    mainTitle: "Ваши результаты RAISEC",
+    mainDescription: "На основе ваших ответов, вот ваши основные области профессиональных интересов",
+    careersTitle: "Карьеры, соответствующие вашим интересам и уровню подготовки",
+    careersDescription: "Вакансии, организованные по уровню подготовки на основе ваших основных областей интересов. Нажмите на любую вакансию, чтобы узнать больше.",
+    preparationLevels: {
+      entry: { title: "Начальный уровень", description: "Минимальная подготовка" },
+      associate: { title: "Средний уровень", description: "Требуется некоторая подготовка" },
+      professional: { title: "Профессиональный уровень", description: "Требуется умеренная подготовка" },
+      senior: { title: "Высокий уровень", description: "Требуется продвинутая подготовка" },
+      executive: { title: "Исполнительный уровень", description: "Требуется обширная подготовка" },
+    },
+    resetButton: "Пройти тест снова",
+    score: "Балл",
+    recommendedCareers: "Рекомендуемые профессии",
+  },
+};
+
+const ResultsPage = ({
+  results,
+  onJobClick,
+  onResetTest,
+  questions,
+  selectedLanguage,
+  selectedType,
+  onLanguageChange,
+  onTypeChange,
+  onResetToMain
+}: ResultsPageProps) => {
+  const topThree = getTopThreeTypes(results.scores);
+  const categorizedJobs = getCategorizedMatches(results.scores, jobCodes);
+
+  const maxScore = Math.max(...Object.values(results.scores));
+
+  const [currentLanguage, setCurrentLanguage] = useState(selectedLanguage);
+  const [currentType, setCurrentType] = useState(selectedType);
+
+  const handleLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const lang = event.target.value as 'ru' | 'kz';
+    setCurrentLanguage(lang);
+    onLanguageChange(lang);
+  };
+
+  const handleTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const type = event.target.value as 'primary' | 'secondary';
+    setCurrentType(type);
+    onTypeChange(type);
+  };
+
+  const t = translations[selectedLanguage] || translations.en; // Fallback to English
+
+  const preparationLevels = [
+    {
+      id: "entry",
+      icon: BookOpen,
+      color: "from-blue-500 to-blue-600",
+      jobs: categorizedJobs.bestMatch.filter(match => jobCodes[match.id]?.job_zone === 1).map(match => match.id),
+      ...t.preparationLevels.entry,
+    },
+    {
+      id: "associate",
+      icon: GraduationCap,
+      color: "from-green-500 to-green-600",
+      jobs: categorizedJobs.bestMatch.filter(match => jobCodes[match.id]?.job_zone === 2).map(match => match.id),
+      ...t.preparationLevels.associate,
+    },
+    {
+      id: "professional",
+      icon: Star,
+      color: "from-purple-500 to-purple-600",
+      jobs: categorizedJobs.bestMatch.filter(match => jobCodes[match.id]?.job_zone === 3).map(match => match.id),
+      ...t.preparationLevels.professional,
+    },
+    {
+      id: "senior",
+      icon: Award,
+      color: "from-orange-500 to-orange-600",
+      jobs: categorizedJobs.bestMatch.filter(match => jobCodes[match.id]?.job_zone === 4).map(match => match.id),
+      ...t.preparationLevels.senior,
+    },
+    {
+      id: "executive",
+      icon: Rocket,
+      color: "from-red-500 to-red-600",
+      jobs: categorizedJobs.bestMatch.filter(match => jobCodes[match.id]?.job_zone === 5).map(match => match.id),
+      ...t.preparationLevels.executive,
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+      <Header
+        selectedLanguage={selectedLanguage}
+        selectedType={selectedType}
+        onLanguageChange={onLanguageChange}
+        onTypeChange={onTypeChange}
+        onResetToMain={onResetToMain}
+        maxWidth="5xl"
+      />
+
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
-              Your RAISEC Results
+              {t.mainTitle}
             </h1>
             <p className="text-xl text-gray-600">
-              Based on your responses, here are your top career interest areas
+              {t.mainDescription}
             </p>
           </div>
 
           <div className="grid gap-6 mb-8">
-            {Object.entries(results).map(([type, score]) => {
+            {Object.entries(results.scores).map(([type, score]) => {
               const typeInfo = careerSuggestions[type as keyof Results];
               const IconComponent = typeInfo.icon;
               const percentage = maxScore > 0 ? (score / maxScore) * 100 : 0;
@@ -50,7 +169,7 @@ const ResultsPage = ({ results, onJobClick, onResetTest }: ResultsPageProps) => 
                         <div className="flex items-center justify-between mb-2">
                           <CardTitle className="text-xl">{typeInfo.title}</CardTitle>
                           <Badge variant={isTopThree ? "default" : "secondary"} className="text-sm">
-                            Score: {score}
+                            {t.score}: {score}
                           </Badge>
                         </div>
                         <Progress value={percentage} className="h-2 mb-2" />
@@ -58,10 +177,10 @@ const ResultsPage = ({ results, onJobClick, onResetTest }: ResultsPageProps) => 
                       </div>
                     </div>
                   </CardHeader>
-                  {isTopThree && (
+                  {isTopThree && typeInfo.careers && typeInfo.careers.length > 0 && (
                     <CardContent>
                       <div className="space-y-2">
-                        <h4 className="font-semibold text-sm">Recommended Careers:</h4>
+                        <h4 className="font-semibold text-sm">{t.recommendedCareers}:</h4>
                         <div className="flex flex-wrap gap-2">
                           {typeInfo.careers.map((career) => (
                             <Badge key={career} variant="outline" className="text-xs">
@@ -77,81 +196,147 @@ const ResultsPage = ({ results, onJobClick, onResetTest }: ResultsPageProps) => 
             })}
           </div>
 
-          <Card className="border-0 shadow-xl bg-white/90 backdrop-blur-sm mb-8">
-            <CardHeader className="pb-6">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 flex items-center justify-center">
-                  <Briefcase className="w-5 h-5 text-white" />
+          <Card className="border-0 shadow-xl bg-white/90 backdrop-blur-sm mb-6">
+            <CardHeader className="pb-4">
+              <div className="flex items-center gap-2 mb-1">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 flex items-center justify-center">
+                  <Briefcase className="w-4 h-4 text-white" />
                 </div>
-                <CardTitle className="text-2xl">Careers that fit your interests and preparation level</CardTitle>
+                <CardTitle className="text-xl">{t.careersTitle}</CardTitle>
               </div>
-              <CardDescription className="text-lg">
-                Jobs organized by preparation level based on your top interest areas. Click on any job to learn more.
+              <CardDescription className="text-base">
+                {t.careersDescription}
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-8">
-              <div>
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center">
-                    <Star className="w-4 h-4 text-white" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-blue-600">Best fit</h3>
-                  <Badge variant="secondary" className="bg-blue-50 text-blue-700">
-                    Higher preparation required
-                  </Badge>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  {categorizedJobs.bestFit.map((job) => (
-                    <div
-                      key={job}
-                      onClick={() => onJobClick(job)}
-                      className="p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg border border-blue-200 hover:shadow-md transition-all duration-200 hover:scale-105 cursor-pointer"
-                    >
-                      <div className="flex items-center gap-3">
-                        <Star className="w-4 h-4 text-blue-600" />
-                        <span className="font-medium text-gray-800">{job}</span>
+            <CardContent>
+              <Tabs defaultValue="entry" className="w-full">
+                <TabsList className="grid w-full grid-cols-5 mb-2">
+                  {preparationLevels.map((level) => {
+                    const IconComponent = level.icon;
+                    return (
+                      <TabsTrigger
+                        key={level.id}
+                        value={level.id}
+                        className="flex flex-col items-center gap-1.5 py-3"
+                      >
+                        <div className={`w-7 h-7 rounded-full bg-gradient-to-r ${level.color} flex items-center justify-center`}>
+                          <IconComponent className="w-3.5 h-3.5 text-white" />
+                        </div>
+                        <span className="text-[11px] font-medium">{level.title}</span>
+                      </TabsTrigger>
+                    );
+                  })}
+                </TabsList>
+                {preparationLevels.map((level) => (
+                  <TabsContent key={level.id} value={level.id} className="mt-16">
+                    <div>
+                      <div className="flex items-center gap-2 mb-4">
+                        <Badge variant="secondary" className={`bg-${level.color.split('-')[1]}-50 text-${level.color.split('-')[1]}-700`}>
+                          {level.description}
+                        </Badge>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
 
-              <div>
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-green-500 to-green-600 flex items-center justify-center">
-                    <Award className="w-4 h-4 text-white" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-green-600">Great fit</h3>
-                  <Badge variant="secondary" className="bg-green-50 text-green-700">
-                    Moderate preparation required
-                  </Badge>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  {categorizedJobs.greatFit.map((job) => (
-                    <div
-                      key={job}
-                      onClick={() => onJobClick(job)}
-                      className="p-4 bg-gradient-to-r from-green-50 to-green-100 rounded-lg border border-green-200 hover:shadow-md transition-all duration-200 hover:scale-105 cursor-pointer"
-                    >
-                      <div className="flex items-center gap-3">
-                        <Award className="w-4 h-4 text-green-600" />
-                        <span className="font-medium text-gray-800">{job}</span>
-                      </div>
+                      {/* Display Best Match jobs */}
+                      {categorizedJobs.bestMatch.filter(match => jobCodes[match.id]?.job_zone === (preparationLevels.indexOf(level) + 1)).length > 0 && (
+                        <div className="mb-6">
+                          <h3 className="text-lg font-semibold mb-3">Best Match</h3>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                            {categorizedJobs.bestMatch
+                              .filter(match => jobCodes[match.id]?.job_zone === (preparationLevels.indexOf(level) + 1))
+                              .map((match) => (
+                                <div
+                                  key={match.id}
+                                  onClick={() => onJobClick(match.id)}
+                                  className={`p-3 bg-gradient-to-r from-${level.color.split('-')[1]}-50 to-${level.color.split('-')[1]}-100 rounded-lg border border-${level.color.split('-')[1]}-200 hover:shadow-md transition-all duration-200 hover:scale-105 cursor-pointer`}
+                                >
+                                  <div className="flex items-center gap-2">
+                                    <level.icon className={`w-3.5 h-3.5 text-${level.color.split('-')[1]}-600`} />
+                                    <span className="font-medium text-sm text-gray-800">
+                                      {selectedLanguage === 'ru'
+                                        ? jobCodes[match.id]?.title_ru
+                                        : selectedLanguage === 'kz'
+                                          ? jobCodes[match.id]?.title_kz
+                                          : jobCodes[match.id]?.title}
+                                    </span>
+                                  </div>
+                                </div>
+                              ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Display Related Matches jobs */}
+                      {categorizedJobs.relatedMatches.filter(match => jobCodes[match.id]?.job_zone === (preparationLevels.indexOf(level) + 1)).length > 0 && (
+                        <div className="mb-6">
+                          <h3 className="text-lg font-semibold mb-3">Related Matches</h3>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                            {categorizedJobs.relatedMatches
+                              .filter(match => jobCodes[match.id]?.job_zone === (preparationLevels.indexOf(level) + 1))
+                              .map((match) => (
+                                <div
+                                  key={match.id}
+                                  onClick={() => onJobClick(match.id)}
+                                  className={`p-3 bg-gradient-to-r from-${level.color.split('-')[1]}-50 to-${level.color.split('-')[1]}-100 rounded-lg border border-${level.color.split('-')[1]}-200 hover:shadow-md transition-all duration-200 hover:scale-105 cursor-pointer`}
+                                >
+                                  <div className="flex items-center gap-2">
+                                    <level.icon className={`w-3.5 h-3.5 text-${level.color.split('-')[1]}-600`} />
+                                    <span className="font-medium text-sm text-gray-800">
+                                      {selectedLanguage === 'ru'
+                                        ? jobCodes[match.id]?.title_ru
+                                        : selectedLanguage === 'kz'
+                                          ? jobCodes[match.id]?.title_kz
+                                          : jobCodes[match.id]?.title}
+                                    </span>
+                                  </div>
+                                </div>
+                              ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Display Other Matches jobs */}
+                      {categorizedJobs.otherMatches.filter(match => jobCodes[match.id]?.job_zone === (preparationLevels.indexOf(level) + 1)).length > 0 && (
+                        <div className="mb-6">
+                          <h3 className="text-lg font-semibold mb-3">Other Matches</h3>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                            {categorizedJobs.otherMatches
+                              .filter(match => jobCodes[match.id]?.job_zone === (preparationLevels.indexOf(level) + 1))
+                              .map((match) => (
+                                <div
+                                  key={match.id}
+                                  onClick={() => onJobClick(match.id)}
+                                  className={`p-3 bg-gradient-to-r from-${level.color.split('-')[1]}-50 to-${level.color.split('-')[1]}-100 rounded-lg border border-${level.color.split('-')[1]}-200 hover:shadow-md transition-all duration-200 hover:scale-105 cursor-pointer`}
+                                >
+                                  <div className="flex items-center gap-2">
+                                    <level.icon className={`w-3.5 h-3.5 text-${level.color.split('-')[1]}-600`} />
+                                    <span className="font-medium text-sm text-gray-800">
+                                      {selectedLanguage === 'ru'
+                                        ? jobCodes[match.id]?.title_ru
+                                        : selectedLanguage === 'kz'
+                                          ? jobCodes[match.id]?.title_kz
+                                          : jobCodes[match.id]?.title}
+                                    </span>
+                                  </div>
+                                </div>
+                              ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  ))}
-                </div>
-              </div>
+                  </TabsContent>
+                ))}
+              </Tabs>
             </CardContent>
           </Card>
 
           <div className="text-center">
-            <Button 
-              onClick={onResetTest} 
-              variant="outline" 
+            <Button
+              onClick={onResetTest}
+              variant="outline"
               size="lg"
-              className="px-8 py-4"
+              className="px-6 py-3"
             >
-              Take Test Again
+              {t.resetButton}
             </Button>
           </div>
         </div>
