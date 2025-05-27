@@ -71,8 +71,8 @@ const Index = () => {
     }));
   };
 
-  const handleJobClick = (jobTitle: string) => {
-    navigate(`/job/${encodeURIComponent(jobTitle)}`);
+  const handleJobClick = (jobId: string) => {
+    navigate(`/job/${encodeURIComponent(jobId)}`);
   };
 
   const handleNextPage = () => {
