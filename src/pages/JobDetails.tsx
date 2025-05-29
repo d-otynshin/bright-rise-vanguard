@@ -1,4 +1,6 @@
+
 import { useParams, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -151,6 +153,8 @@ const mockJob = {
 const JobDetails = () => {
   const { jobTitle } = useParams<{ jobTitle: string }>();
   const navigate = useNavigate();
+  const [selectedLanguage, setSelectedLanguage] = useState<'ru' | 'kz'>('ru');
+  const [selectedType, setSelectedType] = useState<'primary' | 'secondary'>('secondary');
   
   const job = jobTitle ? mockJob : null;
 
@@ -176,10 +180,10 @@ const JobDetails = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       <Header
-        selectedLanguage="ru"
-        selectedType="primary"
-        onLanguageChange={() => {}}
-        onTypeChange={() => {}}
+        selectedLanguage={selectedLanguage}
+        selectedType={selectedType}
+        onLanguageChange={setSelectedLanguage}
+        onTypeChange={setSelectedType}
         onResetToMain={() => navigate("/")}
         maxWidth="6xl"
       />
@@ -213,8 +217,8 @@ const JobDetails = () => {
             <div className="mb-4">
               <p className="text-blue-600 font-medium mb-2">Also called:</p>
               <div className="flex flex-wrap gap-2">
-                {job.alsoCalledList.map((title) => (
-                  <Badge key={title} variant="secondary">{title}</Badge>
+                {job.alsoCalledList.map((title, index) => (
+                  <Badge key={index} variant="secondary">{title}</Badge>
                 ))}
               </div>
             </div>
