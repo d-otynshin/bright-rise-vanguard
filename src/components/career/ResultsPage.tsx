@@ -6,7 +6,7 @@ import { Briefcase, Star, Award, GraduationCap, Rocket, BookOpen } from "lucide-
 import { Results, Question } from "@/types/career";
 import { getTopThreeTypes, getCategorizedMatches } from "@/utils/career-utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useState, Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 import Header from "@/components/shared/Header";
 import { careerSuggestions } from "@/constants/career-data";
 import jobCodes from "@/constants/onet_riasec.json";
@@ -98,21 +98,6 @@ const ResultsPage = ({
   const categorizedJobs = getCategorizedMatches(results.scores, jobCodes);
 
   const maxScore = Math.max(...Object.values(results.scores));
-
-  const [currentLanguage, setCurrentLanguage] = useState(selectedLanguage);
-  const [currentType, setCurrentType] = useState(selectedType);
-
-  const handleLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const lang = event.target.value as 'ru' | 'kz';
-    setCurrentLanguage(lang);
-    onLanguageChange(lang);
-  };
-
-  const handleTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const type = event.target.value as 'primary' | 'secondary';
-    setCurrentType(type);
-    onTypeChange(type);
-  };
 
   const t = translations[selectedLanguage] || translations.en;
 

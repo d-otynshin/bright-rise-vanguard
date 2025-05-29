@@ -1,6 +1,7 @@
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Search } from "lucide-react";
 import { careerSuggestions } from "@/constants/career-data";
 import { Dispatch, SetStateAction, useState } from "react";
 import Header from "@/components/shared/Header";
@@ -109,8 +110,8 @@ const LandingPage = ({
 
       {/* Main Content */}
       <div className="container mx-auto px-4 py-16">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="mb-8">
+        <div className="max-w-6xl mx-auto text-center">
+          <div className="mb-12">
             <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
               {t.title}
             </h1>
@@ -119,83 +120,85 @@ const LandingPage = ({
             </p>
           </div>
 
-          {/* <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {Object.entries(careerSuggestions).map(([key, type]) => {
-              const IconComponent = type.icon;
-              return (
-                <Card key={key} className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-                  <CardHeader className="pb-4">
-                    <div className={`w-12 h-12 rounded-full ${type.color} flex items-center justify-center mb-3 mx-auto`}>
-                      <IconComponent className="w-6 h-6 text-white" />
-                    </div>
-                    <CardTitle className="text-lg">{getTranslatedText(type, 'title')}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-sm">
-                      {getTranslatedText(type, 'description')}
-                    </CardDescription>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div> */}
+          {/* Two cards in a row */}
+          <div className="grid lg:grid-cols-2 gap-8 mb-12">
+            {/* Search Card */}
+            <Card className="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+              <CardHeader className="pb-6">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-r from-emerald-500 to-emerald-600 flex items-center justify-center">
+                    <Search className="w-5 h-5 text-white" />
+                  </div>
+                  <CardTitle className="text-2xl text-left">{t.searchTitle}</CardTitle>
+                </div>
+                <CardDescription className="text-lg text-left">
+                  {t.searchDescription}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <div className="relative mb-4">
+                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <Search className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <input
+                    type="text"
+                    placeholder={t.searchPlaceholder}
+                    className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-left"
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                  />
+                </div>
+                {searchTerm && filteredJobs.length > 0 && (
+                  <div className="border border-gray-200 rounded-lg mt-4 bg-white shadow-sm max-h-60 overflow-y-auto">
+                    {filteredJobs.map((job) => (
+                      <div
+                        key={job.id}
+                        className="px-4 py-3 cursor-pointer hover:bg-gray-50 border-b border-gray-100 last:border-b-0 text-left transition-colors"
+                        onClick={() => handleJobClick(job.id)}
+                      >
+                        <span className="text-gray-800 font-medium">
+                          {selectedLanguage === 'ru'
+                            ? job.title_ru || job.title
+                            : selectedLanguage === 'kz'
+                              ? job.title_kz || job.title
+                              : job.title}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {searchTerm && filteredJobs.length === 0 && (
+                  <div className="px-4 py-3 text-gray-500 border border-gray-200 rounded-lg bg-gray-50">
+                    {selectedLanguage === 'ru' ? 'Работы не найдены' : selectedLanguage === 'kz' ? 'Жұмыс табылмады' : 'No jobs found'}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
 
-        {/* Search Autocomplete */}
-        <div className="container mx-auto px-0 py-8">
-          <Card className="max-w-4xl mx-auto border-0 shadow-lg bg-white/80 backdrop-blur-sm">
-          <CardHeader className="pb-6">
-              <CardTitle className="text-2xl">{t.searchTitle}</CardTitle>
-              <CardDescription className="text-lg">
-                {t.searchDescription}
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="pt-0">
-              <div className="mb-4">
-                <input
-                  type="text"
-                  placeholder={t.searchPlaceholder}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                  value={searchTerm}
-                  onChange={handleSearchChange}
-                />
-              </div>
-              {searchTerm && filteredJobs.length > 0 && (
-                <ul className="border-t border-gray-200 mt-4 pt-4 max-h-60 overflow-y-auto">
-                  {filteredJobs.map((job) => (
-                    <li
-                      key={job.id}
-                      className="px-4 py-2 cursor-pointer hover:bg-gray-100 rounded-md"
-                      onClick={() => handleJobClick(job.id)}
-                    >
-                      {job.title}
-                    </li>
-                  ))}
-                </ul>
-              )}
-              {searchTerm && filteredJobs.length === 0 && (
-                <div className="px-4 py-2 text-gray-500">No jobs found</div>
-              )}
-            </CardContent>
-          </Card>
-        </div>
-
-          <Card className="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-            <CardHeader className="pb-6">
-              <CardTitle className="text-2xl">{t.readyTitle}</CardTitle>
-              <CardDescription className="text-lg">
-                {t.readyDescription}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button 
-                onClick={onStartTest} 
-                size="lg" 
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-lg"
-              >
-                {t.startButton} <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-            </CardContent>
-          </Card>
+            {/* Test Card */}
+            <Card className="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+              <CardHeader className="pb-6">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+                    <ArrowRight className="w-5 h-5 text-white" />
+                  </div>
+                  <CardTitle className="text-2xl text-left">{t.readyTitle}</CardTitle>
+                </div>
+                <CardDescription className="text-lg text-left">
+                  {t.readyDescription}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="pt-6">
+                <Button 
+                  onClick={onStartTest} 
+                  size="lg" 
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-lg"
+                >
+                  {t.startButton} <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     </div>
