@@ -6,7 +6,7 @@ import Questionnaire from "@/components/career/Questionnaire";
 import ResultsPage from "@/components/career/ResultsPage";
 
 // Import the preferences data
-import preferencesData from "@/constants/preferences_localization.json copy";
+import preferencesData from "@/constants/preferences_localization copy.json";
 
 // Import QUESTIONS_PER_PAGE
 import { QUESTIONS_PER_PAGE } from "@/constants/career-data";
