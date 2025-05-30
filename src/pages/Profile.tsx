@@ -23,52 +23,73 @@ const mockProfile = {
   avatar: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=150&h=150&fit=crop&crop=face"
 };
 
-// Mock exam results
-const mockExamResults = [
+// Mock RAISEC test results
+const mockRAISECResults = [
   {
-    subject: "Математика",
-    subjectKz: "Математика",
-    score: 95,
-    maxScore: 100,
-    date: "2024-05-15",
-    grade: "A",
-    percentile: 98
+    category: "Realistic",
+    categoryRu: "Реалистичный",
+    categoryKz: "Реалистік",
+    description: "Работа с инструментами, машинами",
+    descriptionKz: "Құралдармен, машиналармен жұмыс",
+    score: 28,
+    maxScore: 50,
+    percentile: 75,
+    color: "bg-blue-100 text-blue-800"
   },
   {
-    subject: "Физика",
-    subjectKz: "Физика",
-    score: 88,
-    maxScore: 100,
-    date: "2024-05-10",
-    grade: "A",
-    percentile: 92
+    category: "Investigative", 
+    categoryRu: "Исследовательский",
+    categoryKz: "Зерттеушілік",
+    description: "Анализ, исследования, решение проблем",
+    descriptionKz: "Талдау, зерттеу, мәселелерді шешу",
+    score: 42,
+    maxScore: 50,
+    percentile: 92,
+    color: "bg-green-100 text-green-800"
   },
   {
-    subject: "Химия",
-    subjectKz: "Химия",
-    score: 82,
-    maxScore: 100,
-    date: "2024-05-08",
-    grade: "B+",
-    percentile: 85
+    category: "Artistic",
+    categoryRu: "Артистический", 
+    categoryKz: "Көркемдік",
+    description: "Творчество, самовыражение",
+    descriptionKz: "Шығармашылық, өзін-өзі көрсету",
+    score: 35,
+    maxScore: 50,
+    percentile: 80,
+    color: "bg-purple-100 text-purple-800"
   },
   {
-    subject: "Биология",
-    subjectKz: "Биология",
-    score: 91,
-    maxScore: 100,
-    date: "2024-05-12",
-    grade: "A",
-    percentile: 94
+    category: "Social",
+    categoryRu: "Социальный",
+    categoryKz: "Әлеуметтік", 
+    description: "Помощь и обучение других",
+    descriptionKz: "Басқаларға көмек көрсету және оқыту",
+    score: 38,
+    maxScore: 50,
+    percentile: 85,
+    color: "bg-orange-100 text-orange-800"
   },
   {
-    subject: "История Казахстана",
-    subjectKz: "Қазақстан тарихы",
-    score: 76,
-    maxScore: 100,
-    date: "2024-05-05",
-    grade: "B",
-    percentile: 78
+    category: "Enterprising",
+    categoryRu: "Предприимчивый",
+    categoryKz: "Кәсіпкерлік",
+    description: "Лидерство, управление, продажи",
+    descriptionKz: "Көшбасшылық, басқару, сату",
+    score: 31,
+    maxScore: 50,
+    percentile: 72,
+    color: "bg-red-100 text-red-800"
+  },
+  {
+    category: "Conventional",
+    categoryRu: "Конвенциональный",
+    categoryKz: "Дәстүрлі",
+    description: "Организация данных, детальная работа",
+    descriptionKz: "Деректерді ұйымдастыру, егжей-тегжейлі жұмыс",
+    score: 25,
+    maxScore: 50,
+    percentile: 68,
+    color: "bg-yellow-100 text-yellow-800"
   }
 ];
 
@@ -77,17 +98,8 @@ const Profile = () => {
   const [selectedLanguage, setSelectedLanguage] = useState<'ru' | 'kz'>('ru');
   const [selectedType, setSelectedType] = useState<'primary' | 'secondary'>('secondary');
 
-  const getGradeColor = (grade: string) => {
-    switch (grade) {
-      case 'A': return 'bg-green-100 text-green-800';
-      case 'B+': return 'bg-blue-100 text-blue-800';
-      case 'B': return 'bg-yellow-100 text-yellow-800';
-      case 'C': return 'bg-orange-100 text-orange-800';
-      default: return 'bg-gray-100 text-gray-800';
-    }
-  };
-
-  const averageScore = Math.round(mockExamResults.reduce((acc, exam) => acc + exam.score, 0) / mockExamResults.length);
+  const averageScore = Math.round(mockRAISECResults.reduce((acc, result) => acc + result.score, 0) / mockRAISECResults.length);
+  const topCategory = mockRAISECResults.reduce((max, current) => current.score > max.score ? current : max);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
@@ -134,6 +146,7 @@ const Profile = () => {
                 <div className="text-center">
                   <div className="text-3xl font-bold text-blue-600">{averageScore}</div>
                   <div className="text-sm text-gray-500">{selectedLanguage === 'kz' ? 'Орташа балл' : 'Средний балл'}</div>
+                  <div className="text-xs text-gray-400 mt-1">RAISEC</div>
                 </div>
               </div>
             </CardHeader>
@@ -147,7 +160,7 @@ const Profile = () => {
               </TabsTrigger>
               <TabsTrigger value="results" className="flex items-center gap-2">
                 <GraduationCap className="w-4 h-4" />
-                {selectedLanguage === 'kz' ? 'Емтихан нәтижелері' : 'Результаты экзаменов'}
+                {selectedLanguage === 'kz' ? 'RAISEC нәтижелері' : 'Результаты RAISEC'}
               </TabsTrigger>
               <TabsTrigger value="achievements" className="flex items-center gap-2">
                 <Award className="w-4 h-4" />
@@ -189,17 +202,21 @@ const Profile = () => {
                 <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                      <GraduationCap className="w-5 h-5 text-green-600" />
-                      {selectedLanguage === 'kz' ? 'Қызығушылықтар' : 'Интересы'}
+                      <Award className="w-5 h-5 text-green-600" />
+                      {selectedLanguage === 'kz' ? 'Жоғары нәтиже' : 'Лучший результат'}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="flex flex-wrap gap-2">
-                      {(selectedLanguage === 'kz' ? mockProfile.interestsKz : mockProfile.interests).map((interest, index) => (
-                        <Badge key={index} variant="secondary" className="bg-blue-100 text-blue-800">
-                          {interest}
-                        </Badge>
-                      ))}
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-green-600 mb-2">
+                        {selectedLanguage === 'kz' ? topCategory.categoryKz : topCategory.categoryRu}
+                      </div>
+                      <div className="text-sm text-gray-600 mb-3">
+                        {selectedLanguage === 'kz' ? topCategory.descriptionKz : topCategory.description}
+                      </div>
+                      <Badge className={topCategory.color}>
+                        {topCategory.score}/{topCategory.maxScore} {selectedLanguage === 'kz' ? 'балл' : 'баллов'}
+                      </Badge>
                     </div>
                   </CardContent>
                 </Card>
@@ -209,41 +226,42 @@ const Profile = () => {
             <TabsContent value="results" className="space-y-6">
               <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm">
                 <CardHeader>
-                  <CardTitle>{selectedLanguage === 'kz' ? 'Емтихан нәтижелері' : 'Результаты экзаменов'}</CardTitle>
+                  <CardTitle>{selectedLanguage === 'kz' ? 'RAISEC тест нәтижелері' : 'Результаты RAISEC теста'}</CardTitle>
                   <CardDescription>
                     {selectedLanguage === 'kz' 
-                      ? 'Соңғы емтихандардың нәтижелері мен бағалары' 
-                      : 'Последние результаты экзаменов и оценки'}
+                      ? 'Мамандық бағдарын анықтау тестінің нәтижелері' 
+                      : 'Результаты теста на определение профессиональной направленности'}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead>{selectedLanguage === 'kz' ? 'Пән' : 'Предмет'}</TableHead>
+                        <TableHead>{selectedLanguage === 'kz' ? 'Санат' : 'Категория'}</TableHead>
+                        <TableHead>{selectedLanguage === 'kz' ? 'Сипаттама' : 'Описание'}</TableHead>
                         <TableHead>{selectedLanguage === 'kz' ? 'Балл' : 'Балл'}</TableHead>
-                        <TableHead>{selectedLanguage === 'kz' ? 'Баға' : 'Оценка'}</TableHead>
                         <TableHead>{selectedLanguage === 'kz' ? 'Процентиль' : 'Процентиль'}</TableHead>
-                        <TableHead>{selectedLanguage === 'kz' ? 'Күні' : 'Дата'}</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {mockExamResults.map((exam, index) => (
+                      {mockRAISECResults.map((result, index) => (
                         <TableRow key={index}>
                           <TableCell className="font-medium">
-                            {selectedLanguage === 'kz' ? exam.subjectKz : exam.subject}
+                            <div className="flex items-center gap-2">
+                              <Badge className={result.color}>
+                                {result.category.charAt(0)}
+                              </Badge>
+                              <span>{selectedLanguage === 'kz' ? result.categoryKz : result.categoryRu}</span>
+                            </div>
+                          </TableCell>
+                          <TableCell className="text-sm text-gray-600">
+                            {selectedLanguage === 'kz' ? result.descriptionKz : result.description}
                           </TableCell>
                           <TableCell>
-                            <span className="font-semibold">{exam.score}</span>
-                            <span className="text-gray-500">/{exam.maxScore}</span>
+                            <span className="font-semibold">{result.score}</span>
+                            <span className="text-gray-500">/{result.maxScore}</span>
                           </TableCell>
-                          <TableCell>
-                            <Badge className={getGradeColor(exam.grade)}>
-                              {exam.grade}
-                            </Badge>
-                          </TableCell>
-                          <TableCell>{exam.percentile}%</TableCell>
-                          <TableCell className="text-gray-500">{exam.date}</TableCell>
+                          <TableCell>{result.percentile}%</TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
@@ -260,14 +278,14 @@ const Profile = () => {
                       <Award className="w-6 h-6 text-yellow-600" />
                     </div>
                     <CardTitle className="text-lg text-yellow-800">
-                      {selectedLanguage === 'kz' ? 'Үздік оқушы' : 'Лучший ученик'}
+                      {selectedLanguage === 'kz' ? 'RAISEC сарапшысы' : 'RAISEC эксперт'}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="text-center">
                     <p className="text-sm text-yellow-700">
                       {selectedLanguage === 'kz' 
-                        ? '2024 жылдың 1-ші тоқсанында математика пәнінен' 
-                        : 'По математике в 1-й четверти 2024 года'}
+                        ? 'Кәсіби бағдар тестін сәтті аяқтады' 
+                        : 'Успешно завершил тест профориентации'}
                     </p>
                   </CardContent>
                 </Card>
@@ -278,14 +296,14 @@ const Profile = () => {
                       <GraduationCap className="w-6 h-6 text-blue-600" />
                     </div>
                     <CardTitle className="text-lg text-blue-800">
-                      {selectedLanguage === 'kz' ? 'Олимпиада жеңімпазы' : 'Победитель олимпиады'}
+                      {selectedLanguage === 'kz' ? 'Зерттеуші' : 'Исследователь'}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="text-center">
                     <p className="text-sm text-blue-700">
                       {selectedLanguage === 'kz' 
-                        ? 'Информатика пәнінен қалалық олимпиада, 2-орын' 
-                        : 'Городская олимпиада по информатике, 2-е место'}
+                        ? 'Зерттеушілік санатта жоғары нәтиже' 
+                        : 'Высокий результат в категории Исследовательский'}
                     </p>
                   </CardContent>
                 </Card>
@@ -296,14 +314,14 @@ const Profile = () => {
                       <Award className="w-6 h-6 text-green-600" />
                     </div>
                     <CardTitle className="text-lg text-green-800">
-                      {selectedLanguage === 'kz' ? 'Жоба жұмысы' : 'Проектная работа'}
+                      {selectedLanguage === 'kz' ? 'Мамандық табушы' : 'Искатель профессии'}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="text-center">
                     <p className="text-sm text-green-700">
                       {selectedLanguage === 'kz' 
-                        ? 'Ғылыми жоба байқауында 1-орын' 
-                        : 'Победитель конкурса научных проектов'}
+                        ? 'Өзіне сай мамандықты табуға дайын' 
+                        : 'Готов найти подходящую профессию'}
                     </p>
                   </CardContent>
                 </Card>
