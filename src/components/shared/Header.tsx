@@ -1,5 +1,9 @@
+
 import { Dispatch, SetStateAction } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { User } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface HeaderProps {
   selectedLanguage: 'ru' | 'kz';
@@ -18,6 +22,8 @@ const Header = ({
   onResetToMain,
   maxWidth = '4xl'
 }: HeaderProps) => {
+  const navigate = useNavigate();
+
   const handleLanguageChange = (value: 'ru' | 'kz') => {
     onLanguageChange(value);
   };
@@ -39,6 +45,18 @@ const Header = ({
 
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-3">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => navigate("/profile")}
+                className="flex items-center gap-2 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+              >
+                <User className="w-4 h-4" />
+                <span className="hidden sm:inline">
+                  {selectedLanguage === 'kz' ? 'Профиль' : 'Профиль'}
+                </span>
+              </Button>
+
               <Select value={selectedType} onValueChange={handleTypeChange}>
                 <SelectTrigger className="w-[200px] border-gray-200 shadow-sm hover:border-gray-300 transition-colors overflow-hidden text-ellipsis whitespace-nowrap">
                   <SelectValue />
