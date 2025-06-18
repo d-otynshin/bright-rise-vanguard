@@ -45,7 +45,7 @@ const Header = ({
 
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-3">
-              <Button
+              {/* <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => navigate("/profile")}
@@ -55,7 +55,7 @@ const Header = ({
                 <span className="hidden sm:inline">
                   {selectedLanguage === 'kz' ? 'Профиль' : 'Профиль'}
                 </span>
-              </Button>
+              </Button> */}
 
               <Select value={selectedType} onValueChange={handleTypeChange}>
                 <SelectTrigger className="w-[200px] border-gray-200 shadow-sm hover:border-gray-300 transition-colors overflow-hidden text-ellipsis whitespace-nowrap">

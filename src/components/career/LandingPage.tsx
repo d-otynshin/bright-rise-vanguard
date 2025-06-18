@@ -176,7 +176,7 @@ const LandingPage = ({
             </Card>
 
             {/* Test Card */}
-            <Card className="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+            <Card className="border-0 shadow-xl bg-white/80 backdrop-blur-sm h-fit">
               <CardHeader className="pb-6">
                 <div className="flex items-center gap-3 mb-2">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
